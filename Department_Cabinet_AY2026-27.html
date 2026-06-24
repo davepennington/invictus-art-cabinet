@@ -43,21 +43,23 @@
     min-height: 100vh;
   }
 
-  .shell { max-width: 1500px; margin: 0 auto; padding: 56px 36px 120px; }
+  .shell { max-width: 1500px; margin: 0 auto; padding: 80px 48px 80px; }
 
   /* ---- WHO SCREEN ---- */
   #whoScreen {
     position: fixed; inset: 0;
     background: var(--navy-ink);
-    display: flex; align-items: center; justify-content: center;
     z-index: 100;
-    padding: 24px;
+    overflow-y: auto;
+    display: grid;
+    place-items: center;
+    padding: 80px 24px;
   }
   .who-box {
     background: var(--cream);
     border-radius: 8px;
-    padding: 56px 48px 48px;
-    max-width: 380px;
+    padding: 48px 56px 48px;
+    max-width: 520px;
     width: 100%;
     box-shadow: var(--shadow);
     text-align: center;
@@ -134,7 +136,7 @@
 
   /* ---- COMING UP ---- */
   .cu-wrap {
-    margin-top: 32px; padding: 32px 36px 36px;
+    margin-top: 80px; padding: 60px 56px 64px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,200,67,0.26);
     border-radius: var(--r);
@@ -144,26 +146,24 @@
     letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--gold); margin-bottom: 14px;
   }
-  .cu-today {
-    font-size: 1.2rem; color: #FFFFFF; font-weight: 600;
-    margin-bottom: 20px; margin-top: -6px;
-  }
-  .cu-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+  .cu-grid { display: flex; flex-direction: column; gap: 16px; }
+  .cu-cards-row { display: flex; flex-direction: row; gap: 14px; }
+  .cu-cards-row .cu-card { flex: 1; min-width: 0; }
   .cu-card {
-    flex: 1 1 200px; background: var(--cream);
-    border-left: 5px solid var(--amber);
+    flex: 1 1 180px; min-width: 0; background: var(--cream);
+    border-left: 5px solid var(--gold);
     border-radius: var(--r); padding: 20px 22px;
   }
-  .cu-card.pencil { border-left-style: dashed; }
-  .cu-card.holiday { border-left-color: var(--navy); }
-  .cu-card.term-event { border-left-color: rgba(40,72,157,0.4); }
+  .cu-card.pencil { border-left: 5px dashed var(--gold); }
+  .cu-card.holiday { border-left-color: var(--gold); }
+  .cu-card.term-event { border-left-color: var(--gold); }
   .cu-num { font-size: 2.56rem; font-weight: 900; line-height: 1; color: var(--navy); }
   .cu-unit { font-size: 0.71rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-top: 1px; }
   .cu-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-top: 8px; }
   .cu-when { font-size: 1.2rem; color: var(--ink-soft); margin-top: 2px; }
 
   /* ---- TABS ---- */
-  .tabs { display: flex; gap: 4px; margin: 26px 0 0; }
+  .tabs { display: flex; gap: 4px; margin: 80px 0 0; justify-content: center; }
   .tab {
     appearance: none; border: none; cursor: pointer;
     font-family: var(--body); font-size: 1.32rem; font-weight: 700;
@@ -181,10 +181,10 @@
   .tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
   /* ---- PANEL ---- */
-  .panel { background: var(--cream); border-radius: 0 var(--r) var(--r) var(--r); padding: 42px; }
+  .panel { background: var(--cream); border-radius: 0 var(--r) var(--r) var(--r); padding: 72px 72px 120px; }
   .panel[hidden] { display: none; }
 
-  .p-head { padding-bottom: 24px; border-bottom: 1px solid var(--cream-edge); margin-bottom: 30px; }
+  .p-head { padding-bottom: 40px; border-bottom: 1px solid var(--cream-edge); margin-bottom: 60px; }
   .p-name { font-family: var(--display); font-size: clamp(2.8rem, 6vw, 3.8rem); color: var(--navy); font-weight: 400; }
   .p-role { font-size: 1.32rem; font-weight: 700; color: var(--ink); margin-top: 3px; }
   .p-summary { font-size: 1.24rem; color: var(--ink-soft); margin-top: 5px; }
@@ -294,7 +294,7 @@
   .btn-sm:disabled { opacity: 0.45; cursor: not-allowed; }
 
   /* ---- NOTES ---- */
-  .notes-wrap { margin-top: 24px; }
+  .notes-wrap { margin-top: 64px; }
   .notes-label { font-size: 0.73rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-bottom: 6px; }
   .notes-ta {
     width: 100%; min-height: 100px; resize: vertical;
@@ -307,7 +307,7 @@
   .notes-saved { font-size: 1.32rem; color: var(--ink-soft); margin-top: 4px; height: 1em; }
 
   /* ---- FEEDBACK THREAD ---- */
-  .feedback-wrap { margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--cream-edge); }
+  .feedback-wrap { margin-top: 72px; padding-top: 52px; border-top: 1px solid var(--cream-edge); }
   .feedback-head { font-size: 0.73rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; }
   .thread { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; max-height: 260px; overflow-y: auto; padding-right: 4px; }
   .msg { max-width: 82%; padding: 10px 13px; border-radius: 8px; font-size: 1.21rem; }
@@ -326,12 +326,12 @@
 
   /* ---- FOOTER ---- */
   .footer { margin-top: 36px; padding: 36px 40px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,200,67,0.2); border-radius: var(--r); }
-  .footer-head { font-size: 1.24rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; }
-  .footer-sec { margin-bottom: 28px; }
-  .footer-sec-label { font-size: 1.1rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .footer-head { font-size: 1.6rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; }
+  .footer-sec { margin-bottom: 60px; }
+  .footer-sec-label { font-size: 1.3rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
   .cal-row { display: flex; flex-wrap: wrap; gap: 12px 14px; }
-  .cal-item { font-size: 0.95rem; color: rgba(255,255,255,0.95); padding: 9px 14px; background: rgba(255,255,255,0.08); border-left: 3px solid var(--gold); border-radius: 3px; }
-  .cal-item strong { color: var(--white); display: block; font-weight: 800; font-size: 1rem; margin-bottom: 2px; }
+  .cal-item { font-size: 1.15rem; color: rgba(255,255,255,0.95); padding: 14px 22px; background: rgba(255,255,255,0.08); border-left: 4px solid var(--gold); border-radius: 3px; display: inline-flex; align-items: center; gap: 8px; line-height: 1.4; }
+  .cal-item strong { color: var(--white); display: inline; font-weight: 800; font-size: 1.15rem; letter-spacing: 0.04em; margin-right: 8px; }
   .cal-item.holiday { border-left-color: var(--amber); }
   .cal-item.term-item { border-left-color: rgba(255,255,255,0.28); }
 
@@ -340,7 +340,7 @@
 
   .site-note { margin: 18px 4px 0; font-size: 1.28rem; color: rgba(255,255,255,0.46); text-align: center; }
 
-  .cal-image-wrap { margin-top: 36px; padding: 36px 40px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,200,67,0.2); border-radius: var(--r); }
+  .cal-image-wrap { margin-top: 80px; padding: 64px 64px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,200,67,0.2); border-radius: var(--r); }
   .cal-image-head { font-size: 1.24rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
   .cal-image { width: 100%; border-radius: 3px; display: block; }
 
@@ -366,6 +366,55 @@
     .cal-item strong { color: var(--ink); }
     .cu-wrap { display: none; }
   }
+
+  .cu-today-card { border-left: 5px solid var(--gold) !important; background: var(--navy) !important; overflow: hidden; padding: 0 !important; flex: 1 1 100% !important; max-height: 160px; }
+  .cu-cal {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: row; align-items: center;
+    text-align: center;
+    user-select: none;
+    background: var(--navy);
+    gap: 0;
+  }
+  .cu-cal-top {
+    background: var(--navy);
+    padding: 16px 24px;
+    font-size: 1rem; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    border-right: 2px solid rgba(255,200,67,0.3);
+  }
+  .cu-cal-month {
+    background: var(--navy);
+    padding: 0 28px;
+    font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .cu-cal-day {
+    padding: 0 24px;
+    font-size: 5rem; font-weight: 900;
+    color: var(--gold); line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cu-cal-weekday {
+    padding: 0 6px 20px;
+    font-size: 1rem; font-weight: 700;
+    color: var(--gold); letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .cu-date { font-size: 1.15rem; font-weight: 600; color: var(--ink-soft); margin-top: 10px; }
+  .cu-personal-card { border-left-color: var(--navy-deep) !important; background: var(--cream) !important; }
+  .cu-personal-label { font-size: 0.78rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--navy); margin-bottom: 10px; }
+  .cu-personal-title { font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .cu-today-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
 </style>
 </head>
 <body>
@@ -377,17 +426,17 @@
     <div class="who-title">Department Cabinet</div>
     <div class="who-sub">Who are you? This device will remember your choice.</div>
     <div class="who-btns">
-      <button class="who-btn" data-who="alex">
-        <span class="wb-av">A</span>
-        <span><span>Alex</span><span class="wb-role">Art Coordinator · IGCSE</span></span>
+      <button class="who-btn" data-who="scarlett">
+        <span class="wb-av">S</span>
+        <span><span>Scarlett</span><span class="wb-role">Primary Art · Stages 1 to 6</span></span>
       </button>
       <button class="who-btn" data-who="emma">
         <span class="wb-av">E</span>
         <span><span>Emma</span><span class="wb-role">Lower Secondary Art and Music</span></span>
       </button>
-      <button class="who-btn" data-who="scarlett">
-        <span class="wb-av">S</span>
-        <span><span>Scarlett</span><span class="wb-role">Primary Art · Stages 1 to 6</span></span>
+      <button class="who-btn" data-who="alex">
+        <span class="wb-av">A</span>
+        <span><span>Alex</span><span class="wb-role">Art Coordinator · IGCSE</span></span>
       </button>
     </div>
   </div>
@@ -411,19 +460,20 @@
 
   <section class="cu-wrap" aria-label="Coming up">
     <div class="cu-head">Coming up</div>
-    <div class="cu-today" id="cuToday"></div>
     <div class="cu-grid" id="cuGrid"></div>
   </section>
 
   <div class="tabs" role="tablist" aria-label="Department members">
-    <button class="tab" role="tab" id="tab-alex" aria-controls="panel-alex" aria-selected="true">Alex<span class="tab-sub">Art Coordinator</span></button>
+    <button class="tab" role="tab" id="tab-scarlett" aria-controls="panel-scarlett" aria-selected="true">Scarlett<span class="tab-sub">Primary</span></button>
     <button class="tab" role="tab" id="tab-emma" aria-controls="panel-emma" aria-selected="false" tabindex="-1">Emma<span class="tab-sub">Lower Secondary</span></button>
-    <button class="tab" role="tab" id="tab-scarlett" aria-controls="panel-scarlett" aria-selected="false" tabindex="-1">Scarlett<span class="tab-sub">Primary</span></button>
+    <button class="tab" role="tab" id="tab-alex" aria-controls="panel-alex" aria-selected="false" tabindex="-1">Alex<span class="tab-sub">Upper Secondary</span></button>
   </div>
 
-  <section class="panel" id="panel-alex" role="tabpanel" aria-labelledby="tab-alex" tabindex="0" data-key="alex"></section>
+  <section class="panel" id="panel-alex" role="tabpanel" aria-labelledby="tab-alex" tabindex="0" data-key="alex" hidden></section>
   <section class="panel" id="panel-emma" role="tabpanel" aria-labelledby="tab-emma" tabindex="0" data-key="emma" hidden></section>
-  <section class="panel" id="panel-scarlett" role="tabpanel" aria-labelledby="tab-scarlett" tabindex="0" data-key="scarlett" hidden></section>
+  <section class="panel" id="panel-scarlett" role="tabpanel" aria-labelledby="tab-scarlett" tabindex="0" data-key="scarlett"></section>
+
+  <div style="height:120px;"></div>
 
   <footer class="footer">
     <div class="footer-head">The full year at a glance</div>
@@ -439,12 +489,12 @@
     <div class="footer-sec">
       <div class="footer-sec-label">Breaks and school holidays</div>
       <div class="cal-row">
-        <span class="cal-item holiday"><strong>Break 1</strong>9 to 18 Oct 2026 &middot; incl. Pchum Ben 10 to 12 Oct</span>
-        <span class="cal-item holiday"><strong>Break 2</strong>19 Dec 2026 to 10 Jan 2027</span>
-        <span class="cal-item holiday"><strong>Break 3</strong>19 to 28 Mar 2027</span>
-        <span class="cal-item holiday"><strong>Summer</strong>From 18 Jun 2027</span>
-        <span class="cal-item holiday"><strong>School holidays in T2</strong>13, 14 &amp; 16 Oct 2026</span>
-        <span class="cal-item holiday"><strong>School holidays in T4</strong>12 to 13 Apr 2027</span>
+        <span class="cal-item holiday"><strong>Pchum Ben</strong>9 to 18 Oct 2026</span>
+        <span class="cal-item holiday"><strong>Water Festival Break</strong>23 to 25 Nov 2026</span>
+        <span class="cal-item holiday"><strong>Christmas Break</strong>19 Dec 2026 to 10 Jan 2027</span>
+        <span class="cal-item holiday"><strong>Term Break</strong>19 to 28 Mar 2027</span>
+        <span class="cal-item holiday"><strong>Khmer New Year Break</strong>12 to 16 Apr 2027</span>
+        <span class="cal-item holiday"><strong>Summer Holidays</strong>From 18 Jun 2027</span>
       </div>
     </div>
     <div class="footer-sec">
@@ -469,7 +519,7 @@
         <span class="cal-item"><strong>Commemoration Day</strong>15 Oct 2026</span>
         <span class="cal-item"><strong>King&#x2019;s Coronation Day</strong>29 Oct 2026</span>
         <span class="cal-item"><strong>Independence Day</strong>9 Nov 2026</span>
-        <span class="cal-item"><strong>Water Festival</strong>23 to 25 Nov 2026 &middot; no trips</span>
+        <span class="cal-item"><strong>Water Festival</strong>23 to 25 Nov 2026</span>
         <span class="cal-item"><strong>Peace Day</strong>29 Dec 2026</span>
         <span class="cal-item"><strong>New Year&#x2019;s Day</strong>1 Jan 2027</span>
         <span class="cal-item"><strong>Victory over Genocide Day</strong>7 Jan 2027</span>
@@ -515,16 +565,17 @@
   ];
 
   var SHARED = [
-    { id:"rep-t1",  term:1, type:"report", title:"Assessments to students",       when:"Last day of Term 1 · 8 Oct",       date:"2026-10-08", detail:"Term 1 assessments keyed in and sent via Google Classroom by the last day of term." },
-    { id:"rep-t2",  term:2, type:"report", title:"First Semester Report drafts",  when:"Mid November · pencilled",          date:"2026-11-16", pencil:true, detail:"School requests comment and grade drafts before end of term. Pencilled mid November. Confirm with school." },
-    { id:"rep-t3",  term:3, type:"report", title:"Assessments to students",       when:"Last day of Term 3 · 18 Mar",      date:"2027-03-18", detail:"Term 3 assessments keyed in and sent via Google Classroom by the last day of term." },
+    { id:"rep-t1",  term:1, type:"report", title:"Term 1 Assessments",       when:"Last day of Term 1 · 8 Oct · to be confirmed",       date:"2026-10-08", detail:"Term 1 assessments keyed in and sent via Google Classroom by the last day of term. Date to be confirmed." },
+    { id:"rep-t2a", term:2, type:"report", title:"First Semester Report comments", when:"Mid November · pencilled",           date:"2026-11-16", pencil:true, detail:"First Semester Report comments due mid November. Pencilled, confirm with school." },
+    { id:"rep-t2b", term:2, type:"report", title:"First Semester Report grades",   when:"End of November · pencilled",        date:"2026-11-23", pencil:true, detail:"First Semester Report grades due end of November. Pencilled, confirm with school." },
+    { id:"rep-t3",  term:3, type:"report", title:"Term 3 Assessments",       when:"Last day of Term 3 · 18 Mar · to be confirmed",      date:"2027-03-18", detail:"Term 3 assessments keyed in and sent via Google Classroom by the last day of term. Date to be confirmed." },
     { id:"rep-t4a", term:4, type:"report", title:"End of Year Report comments",   when:"Beginning of May · pencilled",      date:"2027-05-03", pencil:true, detail:"End of Year Report comments due at the beginning of May. Pencilled, confirm with school." },
     { id:"rep-t4b", term:4, type:"report", title:"End of Year Report grades",     when:"Beginning of June · pencilled",     date:"2027-06-02", pencil:true, detail:"End of Year Report grades due at the beginning of June. Pencilled, confirm with school." }
   ];
 
   var TEACHERS = {
     alex: {
-      name:"Alex", role:"Art Coordinator · Secondary Art and Design, IGCSE",
+      name:"Alex", role:"Upper Secondary Art and Design, IGCSE",
       summary:"Runs the two IGCSE cohorts directly and coordinates the department.",
       items:[
         { id:"alex-obs-e",  term:1, type:"obs",   title:"Observe Emma",           when:"Term 1",               detail:"Formal lesson observation of Emma with written reflection shared.", chips:["Reflection completed","Feedback given"] },
@@ -534,6 +585,9 @@
         { id:"alex-t2",     term:2, type:"deliv", title:"Complete Component 1",   when:"Through to handover",  detail:"Complete all eight sides and hand over in early December. Clean term, no second component competing." },
         { id:"alex-t3",     term:3, type:"deliv", title:"Component 2 build",      when:"Full term from 11 Jan", detail:"Component 2 ESA runs the entire term.", chips:["Feast and Form drawing visit, Year 11, early term"] },
         { id:"alex-c2",     term:4, type:"exam",  title:"Component 2 finishes",   when:"Early April 2027",     detail:"Component 2 finishes in the first week of Term 4. After this the cohort's assessed making is done." },
+
+
+
         { id:"alex-t4",     term:4, type:"deliv", title:"Submission and Commencement", when:"From early April", detail:"Component 2 handover, then submission prep: photograph, AO-check, and assemble both components to the 20-page digital limit.", chips:["Commencement lead"] }
       ]
     },
@@ -545,6 +599,9 @@
         { id:"emma-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 7 to 9", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Leads printmaking CPD","Mid-term check-in"] },
         { id:"emma-t2",   term:2, type:"deliv", title:"Lead Lower Secondary trip", when:"Late October",        detail:"Lead the Lower Secondary field trip in late October. Alex provides structural support.", chips:["Mid-term check-in"] },
         { id:"emma-t3",   term:3, type:"deliv", title:"Digital record pilot",     when:"Across the term",     detail:"Pilot a digital record for the Lower Secondary strand, informed by the IGCSE thread system.", chips:["Mid-term check-in"] },
+
+
+
         { id:"emma-t4",   term:4, type:"deliv", title:"Commencement contribution", when:"Term 4",             detail:"Contribution to the Commencement display and event." }
       ]
     },
@@ -554,8 +611,10 @@
       items:[
         { id:"scar-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Term 1",             detail:"Formal lesson observation by Alex, with shared written reflection. Completed within Term 1." },
         { id:"scar-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 1 to 6", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week, then the full usable document by mid-term.", chips:["Mid-term check-in"] },
-        { id:"scar-t2",   term:2, type:"deliv", title:"Held light",               when:"Term 2",              detail:"Held light on purpose. Supports the department as needed." },
         { id:"scar-t3",   term:3, type:"deliv", title:"Lead Primary trip",        when:"Late January",        detail:"Lead the Primary field trip in late January. Alex provides structural support.", chips:["Mid-term check-in"] },
+
+
+
         { id:"scar-t4",   term:4, type:"deliv", title:"Khmer New Year and Commencement", when:"Term 4",      detail:"Khmer New Year installation around 14 to 16 April, then Commencement contribution." }
       ]
     }
@@ -749,21 +808,28 @@
   /* ---- COMING UP ---- */
   function renderComingUp() {
     var upcoming = CU_POOL.filter(function(x){ return daysFrom(x.date)>=0; })
-      .sort(function(a,b){ return dInt(a.date)-dInt(b.date); }).slice(0,5);
+      .sort(function(a,b){ return dInt(a.date)-dInt(b.date); }).slice(0,4);
     var el = document.getElementById("cuGrid");
-    var tod = document.getElementById("cuToday");
-    if (tod) tod.textContent = "Today is " + TODAY.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-    if (!upcoming.length) { el.innerHTML='<div class="cu-card"><div class="cu-title">Nothing scheduled. Enjoy the gap.</div></div>'; return; }
-    el.innerHTML = upcoming.map(function(x){
+    if (!upcoming.length) { el.innerHTML='<p class="cu-today-text">Nothing scheduled ahead.</p>'; return; }
+
+    var todayStr = TODAY.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    var todayLine = '<div class="cu-today-text">Today is ' + todayStr + '</div>';
+
+    var cards = upcoming.map(function(x){
       var d = daysFrom(x.date);
       var cls = "cu-card" + (x.pencil?" pencil":"") + (x.type==="holiday"?" holiday":"") + (x.type==="term-event"?" term-event":"");
+      var dateStr = new Date(x.date+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
       return '<div class="'+cls+'">' +
         '<div class="cu-num">'+(d===0?"Today":d)+'<span class="cu-unit">'+(d===0?"":d===1?"day away":"days away")+'</span></div>' +
         '<div class="cu-title">'+esc(x.title)+'</div>' +
-        (x.pencil?'<div class="cu-when">Pencilled</div>':'') +
+        '<div class="cu-date">'+dateStr+(x.pencil?' &middot; pencilled':'')+'</div>' +
         '</div>';
     }).join("");
+
+    el.innerHTML = todayLine + '<div class="cu-cards-row">' + cards + '</div>';
   }
+
+
 
   /* ---- PANEL BUILD ---- */
   function buildPanel(panelEl) {
