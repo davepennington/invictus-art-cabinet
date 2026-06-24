@@ -46,15 +46,7 @@
   .shell { max-width: 1500px; margin: 0 auto; padding: 80px 48px 80px; }
 
   /* ---- WHO SCREEN ---- */
-  #whoScreen {
-    position: fixed; inset: 0;
-    background: var(--navy-ink);
-    z-index: 100;
-    overflow-y: auto;
-    display: grid;
-    place-items: center;
-    padding: 80px 24px;
-  }
+
   .who-box {
     background: var(--cream);
     border-radius: 8px;
@@ -357,7 +349,7 @@
   @media (prefers-reduced-motion: reduce) { .node { transition: none; } }
   @media print {
     body { background: #fff; }
-    #whoScreen { display: none !important; }
+  
     .tabs, .site-note, .status-bar, .switch-btn { display: none; }
     .panel { display: block !important; page-break-inside: avoid; }
     .panel[hidden] { display: block !important; }
@@ -416,6 +408,18 @@
     font-weight: 600;
     color: #FFFFFF;
   }
+  #whoScreen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--navy-ink);
+    z-index: 100;
+    overflow-y: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 24px 60px;
+  }
+
 </style>
 </head>
 <body>
