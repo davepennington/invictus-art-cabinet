@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Department Cabinet · Invictus Art · AY 2026-27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* =====================================================
+     SUPABASE KEYS: swap these two values when ready
+     SUPABASE_URL  = your project URL from Settings > API
+     SUPABASE_ANON = your anon/public key
+     ===================================================== */
+
+  :root {
+    --navy:       #28489D;
+    --navy-deep:  #1d3576;
+    --navy-ink:   #16284f;
+    --gold:       #FFC843;
+    --amber:      #F8A907;
+    --cream:      #FAF0E2;
+    --cream-edge: #e5d5ba;
+    --ink:        #282316;
+    --ink-soft:   #65583e;
+    --white:      #FFFFFF;
+    --display:    "DM Serif Display", Georgia, serif;
+    --body:       "Inter", system-ui, sans-serif;
+    --r:          5px;
+    --shadow:     0 4px 18px rgba(15,26,56,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--body);
+    background: var(--navy-ink);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+
+  .shell { max-width: 1100px; margin: 0 auto; padding: 36px 22px 80px; }
+
+  /* ---- WHO SCREEN ---- */
+  #whoScreen {
+    position: fixed; inset: 0;
+    background: var(--navy-ink);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 24px;
+  }
+  .who-box {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 40px 36px 36px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .who-eyebrow {
+    font-size: 0.62rem; font-weight: 800;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 10px;
+  }
+  .who-title {
+    font-family: var(--display);
+    font-size: 2rem; color: var(--navy);
+    margin-bottom: 6px; line-height: 1.1;
+  }
+  .who-sub {
+    font-size: 0.85rem; color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+  .who-btns { display: flex; flex-direction: column; gap: 10px; }
+  .who-btn {
+    appearance: none; border: 2px solid var(--navy);
+    background: var(--white); color: var(--navy);
+    font-family: var(--body); font-size: 1rem; font-weight: 700;
+    padding: 14px 20px; border-radius: var(--r);
+    cursor: pointer; transition: background 0.14s, color 0.14s;
+    text-align: left; display: flex; align-items: center; gap: 12px;
+  }
+  .who-btn:hover { background: var(--navy); color: var(--white); }
+  .who-btn .wb-role { font-size: 0.72rem; font-weight: 500; opacity: 0.7; display: block; margin-top: 2px; }
+  .who-btn .wb-av {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--navy); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 800; flex-shrink: 0;
+  }
+  .who-btn:hover .wb-av { background: var(--white); color: var(--navy); }
+
+  /* ---- MASTHEAD ---- */
+  .mast {
+    display: flex; align-items: flex-end;
+    justify-content: space-between; gap: 18px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(255,200,67,0.45);
+  }
+  .mast-eyebrow {
+    font-size: 0.64rem; font-weight: 800;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .mast h1 {
+    font-family: var(--display);
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+    line-height: 1; color: var(--white); font-weight: 400;
+  }
+  .mast-right { text-align: right; flex-shrink: 0; }
+  .mast-you {
+    font-size: 0.64rem; font-weight: 800;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .mast-name {
+    font-family: var(--display);
+    font-size: 1.6rem; color: var(--white); line-height: 1;
+  }
+  .switch-btn {
+    appearance: none; border: none; background: none;
+    font-family: var(--body); font-size: 0.68rem; font-weight: 600;
+    color: rgba(255,255,255,0.45); cursor: pointer;
+    margin-top: 6px; display: block; margin-left: auto;
+    transition: color 0.14s;
+  }
+  .switch-btn:hover { color: var(--gold); }
+  .spark { width: 0.5em; height: 0.5em; fill: var(--gold); vertical-align: 0.12em; }
+
+  /* ---- COMING UP ---- */
+  .cu-wrap {
+    margin-top: 22px; padding: 18px 22px 20px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,200,67,0.26);
+    border-radius: var(--r);
+  }
+  .cu-head {
+    font-size: 0.62rem; font-weight: 800;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .cu-today {
+    font-size: 0.7rem; color: rgba(255,255,255,0.5);
+    margin-bottom: 14px; margin-top: -10px;
+  }
+  .cu-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .cu-card {
+    flex: 1 1 170px; background: var(--cream);
+    border-left: 4px solid var(--amber);
+    border-radius: var(--r); padding: 12px 14px;
+  }
+  .cu-card.pencil { border-left-style: dashed; }
+  .cu-card.holiday { border-left-color: var(--navy); }
+  .cu-card.term-event { border-left-color: rgba(40,72,157,0.4); }
+  .cu-num { font-size: 1.55rem; font-weight: 900; line-height: 1; color: var(--navy); }
+  .cu-unit { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-top: 1px; }
+  .cu-title { font-size: 0.86rem; font-weight: 700; color: var(--ink); margin-top: 8px; }
+  .cu-when { font-size: 0.72rem; color: var(--ink-soft); margin-top: 2px; }
+
+  /* ---- TABS ---- */
+  .tabs { display: flex; gap: 4px; margin: 26px 0 0; }
+  .tab {
+    appearance: none; border: none; cursor: pointer;
+    font-family: var(--body); font-size: 0.92rem; font-weight: 700;
+    color: rgba(255,255,255,0.58);
+    background: rgba(255,255,255,0.07);
+    padding: 11px 22px;
+    border-radius: var(--r) var(--r) 0 0;
+    border-bottom: 3px solid transparent;
+    transition: background 0.14s, color 0.14s;
+  }
+  .tab .tab-sub { display: block; font-size: 0.57rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.36); margin-top: 3px; }
+  .tab:hover { background: rgba(255,255,255,0.13); color: var(--white); }
+  .tab[aria-selected="true"] { background: var(--cream); color: var(--navy); border-bottom-color: var(--gold); }
+  .tab[aria-selected="true"] .tab-sub { color: var(--ink-soft); }
+  .tab:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+  /* ---- PANEL ---- */
+  .panel { background: var(--cream); border-radius: 0 var(--r) var(--r) var(--r); padding: 28px; }
+  .panel[hidden] { display: none; }
+
+  .p-head { padding-bottom: 16px; border-bottom: 1px solid var(--cream-edge); margin-bottom: 20px; }
+  .p-name { font-family: var(--display); font-size: clamp(1.9rem, 4vw, 2.6rem); color: var(--navy); font-weight: 400; }
+  .p-role { font-size: 0.78rem; font-weight: 700; color: var(--ink); margin-top: 3px; }
+  .p-summary { font-size: 0.88rem; color: var(--ink-soft); margin-top: 5px; }
+  .readonly-badge {
+    display: inline-block; margin-top: 8px;
+    font-size: 0.62rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-soft); background: var(--cream-edge);
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* ---- LEGEND ---- */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; font-size: 0.68rem; font-weight: 700; color: var(--ink-soft); }
+  .leg-item { display: inline-flex; align-items: center; gap: 5px; }
+  .pip { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+  .pip.deliv { background: var(--navy); }
+  .pip.report { background: var(--amber); }
+  .pip.obs { background: var(--navy-deep); border: 2px solid var(--gold); }
+  .pip.exam { background: var(--gold); border: 1px solid var(--amber); }
+
+  /* ---- TIMELINE ---- */
+  .tl { display: grid; grid-template-columns: repeat(4,1fr); gap: 9px; }
+  .tl-col { background: var(--white); border: 1px solid var(--cream-edge); border-radius: var(--r); display: flex; flex-direction: column; }
+  .tl-col.now { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+  .tl-h { background: var(--navy); padding: 9px 11px; border-radius: var(--r) var(--r) 0 0; }
+  .tl-h .tname { font-size: 0.66rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+  .tl-h .tdates { font-size: 0.62rem; color: rgba(255,255,255,0.7); margin-top: 1px; }
+  .now-tag { display: inline-block; font-size: 0.5rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; background: var(--gold); color: var(--navy); padding: 1px 5px; border-radius: 10px; margin-left: 5px; vertical-align: 1px; }
+  .tl-b { padding: 9px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+
+  /* ---- NODES ---- */
+  .node {
+    appearance: none; text-align: left; width: 100%;
+    font-family: var(--body); font-size: 0.75rem; font-weight: 600;
+    color: var(--white); background: var(--navy);
+    border: none; border-left: 3px solid var(--gold);
+    border-radius: 3px; padding: 8px 24px 8px 9px;
+    cursor: pointer; position: relative;
+    transition: filter 0.12s, transform 0.12s;
+  }
+  .node:hover { filter: brightness(1.14); transform: translateX(2px); }
+  .node:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+  .node[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--navy-deep); }
+  .node.report { background: var(--amber); color: var(--ink); border-left-color: var(--navy); }
+  .node.obs { background: var(--navy-deep); border-left-color: var(--gold); }
+  .node.exam { background: var(--gold); color: var(--ink); border-left-color: var(--amber); }
+  .node .nwhen { display: block; font-size: 0.58rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; margin-top: 2px; }
+  .node.done { opacity: 0.48; }
+  .node.done .ntitle { text-decoration: line-through; }
+  .done-tick { position: absolute; top: 6px; right: 6px; font-size: 0.75rem; display: none; }
+  .node.done .done-tick { display: block; }
+
+  /* ---- DETAIL PANE ---- */
+  .detail {
+    margin-top: 14px; background: var(--white);
+    border: 1px solid var(--cream-edge); border-top: 4px solid var(--navy);
+    border-radius: var(--r); padding: 18px 20px; min-height: 88px;
+  }
+  .det-kind { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 2px; }
+  .det-title { font-family: var(--display); font-size: 1.6rem; color: var(--navy); line-height: 1.1; }
+  .det-when { font-size: 0.78rem; font-weight: 700; color: var(--ink); margin: 4px 0 10px; }
+  .det-body { font-size: 0.88rem; color: var(--ink); margin-bottom: 12px; }
+  .det-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .chip { font-size: 0.68rem; font-weight: 700; color: var(--navy); background: rgba(40,72,157,0.08); border: 1px solid rgba(40,72,157,0.2); padding: 2px 9px; border-radius: 20px; }
+  .det-empty { font-size: 0.88rem; color: var(--ink-soft); font-style: italic; }
+
+  /* ---- TICK ---- */
+  .chk-label { display: inline-flex; align-items: center; gap: 9px; cursor: pointer; user-select: none; font-size: 0.83rem; font-weight: 700; color: var(--ink); }
+  .chk-label input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .chk-box { width: 21px; height: 21px; border: 2px solid var(--navy); border-radius: 3px; background: var(--white); flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; transition: background 0.12s; }
+  .chk-box::after { content: ""; display: block; width: 10px; height: 5px; border-left: 2px solid var(--white); border-bottom: 2px solid var(--white); transform: rotate(-45deg) translateY(-1px); opacity: 0; transition: opacity 0.1s; }
+  .chk-label input:checked + .chk-box { background: var(--navy); border-color: var(--navy); }
+  .chk-label input:checked + .chk-box::after { opacity: 1; }
+  .chk-label input:focus-visible + .chk-box { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .chk-label.disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+  /* ---- LINKS ---- */
+  .links-section { margin-top: 14px; }
+  .links-head { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 8px; }
+  .link-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .link-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
+  .link-item a { color: var(--navy); font-weight: 600; text-decoration: none; word-break: break-all; }
+  .link-item a:hover { text-decoration: underline; }
+  .link-del { appearance: none; border: none; background: none; color: var(--ink-soft); cursor: pointer; font-size: 0.9rem; line-height: 1; padding: 0 3px; }
+  .link-del:hover { color: #c0392b; }
+  .link-add { display: flex; gap: 7px; margin-top: 6px; }
+  .link-input {
+    flex: 1; font-family: var(--body); font-size: 0.82rem; color: var(--ink);
+    background: var(--white); border: 1px solid var(--cream-edge);
+    border-radius: 3px; padding: 7px 10px;
+  }
+  .link-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(40,72,157,0.16); }
+  .link-label-input {
+    width: 120px; font-family: var(--body); font-size: 0.82rem; color: var(--ink);
+    background: var(--white); border: 1px solid var(--cream-edge);
+    border-radius: 3px; padding: 7px 10px;
+  }
+  .link-label-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(40,72,157,0.16); }
+  .btn-sm {
+    appearance: none; border: none; cursor: pointer;
+    font-family: var(--body); font-size: 0.78rem; font-weight: 700;
+    background: var(--navy); color: var(--white);
+    padding: 7px 14px; border-radius: 3px;
+    transition: filter 0.12s;
+    white-space: nowrap;
+  }
+  .btn-sm:hover { filter: brightness(1.14); }
+  .btn-sm:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  /* ---- NOTES ---- */
+  .notes-wrap { margin-top: 14px; }
+  .notes-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-bottom: 6px; }
+  .notes-ta {
+    width: 100%; min-height: 64px; resize: vertical;
+    font-family: var(--body); font-size: 0.86rem; color: var(--ink);
+    background: var(--white); border: 1px solid var(--cream-edge);
+    border-radius: 3px; padding: 9px 11px;
+  }
+  .notes-ta:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(40,72,157,0.16); }
+  .notes-ta:disabled { opacity: 0.5; cursor: not-allowed; background: var(--cream); }
+  .notes-saved { font-size: 0.66rem; color: var(--ink-soft); margin-top: 4px; height: 1em; }
+
+  /* ---- FEEDBACK THREAD ---- */
+  .feedback-wrap { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--cream-edge); }
+  .feedback-head { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; }
+  .thread { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; max-height: 260px; overflow-y: auto; padding-right: 4px; }
+  .msg { max-width: 82%; padding: 10px 13px; border-radius: 8px; font-size: 0.85rem; }
+  .msg.from-alex { align-self: flex-end; background: var(--navy); color: var(--white); border-bottom-right-radius: 2px; }
+  .msg.from-other { align-self: flex-start; background: var(--cream-edge); color: var(--ink); border-bottom-left-radius: 2px; }
+  .msg-meta { font-size: 0.62rem; opacity: 0.7; margin-top: 4px; }
+  .msg-empty { font-size: 0.84rem; color: var(--ink-soft); font-style: italic; }
+  .msg-compose { display: flex; gap: 7px; }
+  .msg-input {
+    flex: 1; font-family: var(--body); font-size: 0.84rem; color: var(--ink);
+    background: var(--white); border: 1px solid var(--cream-edge);
+    border-radius: 3px; padding: 8px 11px;
+    resize: none; min-height: 40px;
+  }
+  .msg-input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(40,72,157,0.16); }
+
+  /* ---- FOOTER ---- */
+  .footer { margin-top: 26px; padding: 20px 24px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,200,67,0.2); border-radius: var(--r); }
+  .footer-head { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .footer-sec { margin-bottom: 14px; }
+  .footer-sec-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.42); margin-bottom: 8px; }
+  .cal-row { display: flex; flex-wrap: wrap; gap: 7px 10px; }
+  .cal-item { font-size: 0.76rem; color: rgba(255,255,255,0.86); padding: 5px 11px; background: rgba(255,255,255,0.06); border-left: 3px solid var(--gold); border-radius: 3px; }
+  .cal-item strong { color: var(--white); display: block; font-weight: 700; }
+  .cal-item.holiday { border-left-color: var(--amber); }
+  .cal-item.term-item { border-left-color: rgba(255,255,255,0.28); }
+
+  /* ---- STATUS ---- */
+  .status-bar { margin-top: 10px; font-size: 0.7rem; color: rgba(255,255,255,0.42); text-align: center; min-height: 1.2em; }
+
+  .site-note { margin: 18px 4px 0; font-size: 0.76rem; color: rgba(255,255,255,0.46); text-align: center; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 760px) {
+    .mast { flex-direction: column; align-items: flex-start; }
+    .tabs { flex-wrap: wrap; }
+    .tab { flex: 1 1 auto; }
+    .tl { grid-template-columns: 1fr 1fr; }
+    .panel { padding: 20px 16px; }
+  }
+  @media (max-width: 480px) { .tl { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .node { transition: none; } }
+  @media print {
+    body { background: #fff; }
+    #whoScreen { display: none !important; }
+    .tabs, .site-note, .status-bar, .switch-btn { display: none; }
+    .panel { display: block !important; page-break-inside: avoid; }
+    .panel[hidden] { display: block !important; }
+    .footer { background: var(--cream); }
+    .footer-head { color: var(--navy); }
+    .cal-item { background: var(--cream); color: var(--ink); }
+    .cal-item strong { color: var(--ink); }
+    .cu-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- WHO ARE YOU SCREEN -->
+<div id="whoScreen" role="dialog" aria-modal="true" aria-label="Who are you?">
+  <div class="who-box">
+    <div class="who-eyebrow">Invictus Art · AY 2026-27</div>
+    <div class="who-title">Department Cabinet</div>
+    <div class="who-sub">Who are you? This device will remember your choice.</div>
+    <div class="who-btns">
+      <button class="who-btn" data-who="alex">
+        <span class="wb-av">A</span>
+        <span><span>Alex</span><span class="wb-role">Art Coordinator · IGCSE</span></span>
+      </button>
+      <button class="who-btn" data-who="emma">
+        <span class="wb-av">E</span>
+        <span><span>Emma</span><span class="wb-role">Lower Secondary Art and Music</span></span>
+      </button>
+      <button class="who-btn" data-who="scarlett">
+        <span class="wb-av">S</span>
+        <span><span>Scarlett</span><span class="wb-role">Primary Art · Stages 1 to 6</span></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="shell" id="app" style="display:none">
+
+  <header class="mast">
+    <div>
+      <div class="mast-eyebrow">Invictus Art &amp; Design
+        <svg class="spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0l2.4 8.1L22 10.5l-7.6 2.4L12 21l-2.4-8.1L2 10.5l7.6-2.4z"/></svg>
+      </div>
+      <h1>Department Cabinet</h1>
+    </div>
+    <div class="mast-right">
+      <div class="mast-you">Signed in as</div>
+      <div class="mast-name" id="mastName"></div>
+      <button class="switch-btn" id="switchBtn">Not you? Switch</button>
+    </div>
+  </header>
+
+  <section class="cu-wrap" aria-label="Coming up">
+    <div class="cu-head">Coming up</div>
+    <div class="cu-today" id="cuToday"></div>
+    <div class="cu-grid" id="cuGrid"></div>
+  </section>
+
+  <div class="tabs" role="tablist" aria-label="Department members">
+    <button class="tab" role="tab" id="tab-alex" aria-controls="panel-alex" aria-selected="true">Alex<span class="tab-sub">Art Coordinator</span></button>
+    <button class="tab" role="tab" id="tab-emma" aria-controls="panel-emma" aria-selected="false" tabindex="-1">Emma<span class="tab-sub">Lower Secondary</span></button>
+    <button class="tab" role="tab" id="tab-scarlett" aria-controls="panel-scarlett" aria-selected="false" tabindex="-1">Scarlett<span class="tab-sub">Primary</span></button>
+  </div>
+
+  <section class="panel" id="panel-alex" role="tabpanel" aria-labelledby="tab-alex" tabindex="0" data-key="alex"></section>
+  <section class="panel" id="panel-emma" role="tabpanel" aria-labelledby="tab-emma" tabindex="0" data-key="emma" hidden></section>
+  <section class="panel" id="panel-scarlett" role="tabpanel" aria-labelledby="tab-scarlett" tabindex="0" data-key="scarlett" hidden></section>
+
+  <footer class="footer">
+    <div class="footer-head">The full year at a glance</div>
+    <div class="footer-sec">
+      <div class="footer-sec-label">Terms</div>
+      <div class="cal-row">
+        <span class="cal-item term-item"><strong>Term 1</strong>6 Aug to 8 Oct 2026</span>
+        <span class="cal-item term-item"><strong>Term 2</strong>19 Oct to 18 Dec 2026</span>
+        <span class="cal-item term-item"><strong>Term 3</strong>11 Jan to 18 Mar 2027</span>
+        <span class="cal-item term-item"><strong>Term 4</strong>29 Mar to 15 Jun 2027</span>
+      </div>
+    </div>
+    <div class="footer-sec">
+      <div class="footer-sec-label">Breaks</div>
+      <div class="cal-row">
+        <span class="cal-item holiday"><strong>Break 1</strong>9 to 18 Oct 2026</span>
+        <span class="cal-item holiday"><strong>Break 2</strong>19 Dec 2026 to 10 Jan 2027</span>
+        <span class="cal-item holiday"><strong>Break 3</strong>19 to 28 Mar 2027</span>
+        <span class="cal-item holiday"><strong>Summer</strong>From 16 Jun 2027</span>
+      </div>
+    </div>
+    <div class="footer-sec">
+      <div class="footer-sec-label">Cambodia public holidays</div>
+      <div class="cal-row">
+        <span class="cal-item"><strong>Water Festival</strong>23 to 25 Nov · no trips</span>
+        <span class="cal-item"><strong>Christmas</strong>25 Dec 2026</span>
+        <span class="cal-item"><strong>New Year</strong>1 Jan 2027</span>
+        <span class="cal-item"><strong>Chinese New Year</strong>6 Feb 2027</span>
+        <span class="cal-item"><strong>Khmer New Year</strong>14 to 16 Apr 2027</span>
+        <span class="cal-item"><strong>Labour Day</strong>1 May 2027</span>
+        <span class="cal-item"><strong>King&#x2019;s Birthday</strong>14 May 2027</span>
+      </div>
+    </div>
+    <div class="footer-sec">
+      <div class="footer-sec-label">School-wide events</div>
+      <div class="cal-row">
+        <span class="cal-item"><strong>Commencement</strong>Late May to June 2027</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="status-bar" id="statusBar"></div>
+  <p class="site-note">One named focus per person each term. One check-in mid-term. Tick items as they land.</p>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =====================================================
+     SUPABASE KEYS: replace these when you have them
+     ===================================================== */
+  var SUPABASE_URL  = "https://zdoicyieyursgxmefcta.supabase.co";
+  var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpkb2ljeWlleXVyc2d4bWVmY3RhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNzAxNTQsImV4cCI6MjA5Nzg0NjE1NH0.pxHn444bKqh7ennrwBD9RvKWFgcAq9Lh8oRO4fPrD1g";
+  var USE_SUPABASE  = true;
+  /* ===================================================== */
+
+  var TERMS = [
+    { n:1, label:"Term 1", dates:"6 Aug to 8 Oct",  start:"2026-08-06", end:"2026-10-08" },
+    { n:2, label:"Term 2", dates:"19 Oct to 18 Dec", start:"2026-10-19", end:"2026-12-18" },
+    { n:3, label:"Term 3", dates:"11 Jan to 18 Mar", start:"2027-01-11", end:"2027-03-18" },
+    { n:4, label:"Term 4", dates:"29 Mar to 15 Jun", start:"2027-03-29", end:"2027-06-15" }
+  ];
+
+  var SHARED = [
+    { id:"rep-t1",  term:1, type:"report", title:"Assessments to students",       when:"Last day of Term 1 · 8 Oct",       date:"2026-10-08", detail:"Term 1 assessments keyed in and sent via Google Classroom by the last day of term." },
+    { id:"rep-t2",  term:2, type:"report", title:"First Semester Report drafts",  when:"Mid November · pencilled",          date:"2026-11-16", pencil:true, detail:"School requests comment and grade drafts before end of term. Pencilled mid November. Confirm with school." },
+    { id:"rep-t3",  term:3, type:"report", title:"Assessments to students",       when:"Last day of Term 3 · 18 Mar",      date:"2027-03-18", detail:"Term 3 assessments keyed in and sent via Google Classroom by the last day of term." },
+    { id:"rep-t4a", term:4, type:"report", title:"End of Year Report comments",   when:"Beginning of May · pencilled",      date:"2027-05-03", pencil:true, detail:"End of Year Report comments due at the beginning of May. Pencilled, confirm with school." },
+    { id:"rep-t4b", term:4, type:"report", title:"End of Year Report grades",     when:"Beginning of June · pencilled",     date:"2027-06-02", pencil:true, detail:"End of Year Report grades due at the beginning of June. Pencilled, confirm with school." }
+  ];
+
+  var TEACHERS = {
+    alex: {
+      name:"Alex", role:"Art Coordinator · Secondary Art and Design, IGCSE",
+      summary:"Runs the two IGCSE cohorts directly and coordinates the department.",
+      items:[
+        { id:"alex-obs-e",  term:1, type:"obs",   title:"Observe Emma",           when:"Term 1",               detail:"Formal lesson observation of Emma with written reflection shared.", chips:["Reflection completed","Feedback given"] },
+        { id:"alex-obs-s",  term:1, type:"obs",   title:"Observe Scarlett",       when:"Term 1",               detail:"Formal lesson observation of Scarlett with written reflection shared.", chips:["Reflection completed","Feedback given"] },
+        { id:"alex-t1",     term:1, type:"deliv", title:"Open Component 1",       when:"From day one",         detail:"Open Component 1 across the four boards for Year 11. Settle the new Year 10 cohort into the department system before half-term.", chips:["RUPP Library visit","Studio or gallery visit","Coordinates both Schemes of Work"] },
+        { id:"alex-c1",     term:2, type:"exam",  title:"Component 1 handover",   when:"Early December 2026",  detail:"Component 1 portfolio handover for Year 11. The first of the two dates the whole year turns on." },
+        { id:"alex-t2",     term:2, type:"deliv", title:"Complete Component 1",   when:"Through to handover",  detail:"Complete all eight sides and hand over in early December. Clean term, no second component competing." },
+        { id:"alex-t3",     term:3, type:"deliv", title:"Component 2 build",      when:"Full term from 11 Jan", detail:"Component 2 ESA runs the entire term.", chips:["Feast and Form drawing visit, Year 11, early term"] },
+        { id:"alex-c2",     term:4, type:"exam",  title:"Component 2 finishes",   when:"Early April 2027",     detail:"Component 2 finishes in the first week of Term 4. After this the cohort's assessed making is done." },
+        { id:"alex-t4",     term:4, type:"deliv", title:"Submission and Commencement", when:"From early April", detail:"Component 2 handover, then submission prep: photograph, AO-check, and assemble both components to the 20-page digital limit.", chips:["Commencement lead"] }
+      ]
+    },
+    emma: {
+      name:"Emma", role:"Lower Secondary Art and Design · Music",
+      summary:"Leads Lower Secondary art and the department's Lower Secondary field trip.",
+      items:[
+        { id:"emma-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Term 1",             detail:"Formal lesson observation by Alex, with shared written reflection. Completed within Term 1." },
+        { id:"emma-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 7 to 9", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Leads printmaking CPD","Mid-term check-in"] },
+        { id:"emma-t2",   term:2, type:"deliv", title:"Lead Lower Secondary trip", when:"Late October",        detail:"Lead the Lower Secondary field trip in late October. Alex provides structural support.", chips:["Mid-term check-in"] },
+        { id:"emma-t3",   term:3, type:"deliv", title:"Digital record pilot",     when:"Across the term",     detail:"Pilot a digital record for the Lower Secondary strand, informed by the IGCSE thread system.", chips:["Mid-term check-in"] },
+        { id:"emma-t4",   term:4, type:"deliv", title:"Commencement contribution", when:"Term 4",             detail:"Contribution to the Commencement display and event." }
+      ]
+    },
+    scarlett: {
+      name:"Scarlett", role:"Primary Art · Stages 1 to 6",
+      summary:"Leads Primary art and the department's Primary field trip.",
+      items:[
+        { id:"scar-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Term 1",             detail:"Formal lesson observation by Alex, with shared written reflection. Completed within Term 1." },
+        { id:"scar-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 1 to 6", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week, then the full usable document by mid-term.", chips:["Mid-term check-in"] },
+        { id:"scar-t2",   term:2, type:"deliv", title:"Held light",               when:"Term 2",              detail:"Held light on purpose. Supports the department as needed." },
+        { id:"scar-t3",   term:3, type:"deliv", title:"Lead Primary trip",        when:"Late January",        detail:"Lead the Primary field trip in late January. Alex provides structural support.", chips:["Mid-term check-in"] },
+        { id:"scar-t4",   term:4, type:"deliv", title:"Khmer New Year and Commencement", when:"Term 4",      detail:"Khmer New Year installation around 14 to 16 April, then Commencement contribution." }
+      ]
+    }
+  };
+
+  var CU_POOL = [
+    { title:"Term 1 begins",                   date:"2026-08-06", type:"term-event" },
+    { title:"SoW skeletons due",               date:"2026-08-20", type:"deliv" },
+    { title:"Term 1 assessments to students",  date:"2026-10-08", type:"report" },
+    { title:"Term 1 ends",                     date:"2026-10-08", type:"term-event" },
+    { title:"Term 2 begins",                   date:"2026-10-19", type:"term-event" },
+    { title:"First Semester Report drafts",    date:"2026-11-16", type:"report", pencil:true },
+    { title:"Water Festival · no trips",       date:"2026-11-23", type:"holiday" },
+    { title:"Component 1 handover",            date:"2026-12-05", type:"report" },
+    { title:"Term 2 ends",                     date:"2026-12-18", type:"term-event" },
+    { title:"Term 3 begins",                   date:"2027-01-11", type:"term-event" },
+    { title:"Chinese New Year",                date:"2027-02-06", type:"holiday" },
+    { title:"Term 3 assessments to students",  date:"2027-03-18", type:"report" },
+    { title:"Term 3 ends",                     date:"2027-03-18", type:"term-event" },
+    { title:"Term 4 begins",                   date:"2027-03-29", type:"term-event" },
+    { title:"Component 2 finishes",            date:"2027-04-06", type:"report" },
+    { title:"Khmer New Year",                  date:"2027-04-14", type:"holiday" },
+    { title:"End of Year Report comments",     date:"2027-05-03", type:"report", pencil:true },
+    { title:"Commencement",                    date:"2027-05-25", type:"deliv",  pencil:true },
+    { title:"End of Year Report grades",       date:"2027-06-02", type:"report", pencil:true },
+    { title:"Term 4 ends",                     date:"2027-06-15", type:"term-event" }
+  ];
+
+  /* ---- STATE ---- */
+  var WHO = null;
+
+  /* ---- STORAGE: local fallback when Supabase not yet wired ---- */
+  var local = {
+    get: function (k) { try { return localStorage.getItem(k); } catch(e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch(e) {} }
+  };
+
+  function status(msg) {
+    var el = document.getElementById("statusBar");
+    if (el) el.textContent = msg || "";
+  }
+
+  /* ---- SUPABASE HELPERS ---- */
+  function sbHeaders() {
+    return { "Content-Type":"application/json", "apikey": SUPABASE_ANON, "Authorization":"Bearer " + SUPABASE_ANON };
+  }
+
+  function sbGet(table, filters) {
+    if (!USE_SUPABASE) return Promise.resolve(null);
+    var qs = Object.keys(filters).map(function(k){ return k + "=eq." + encodeURIComponent(filters[k]); }).join("&");
+    return fetch(SUPABASE_URL + "/rest/v1/" + table + "?" + qs, { headers: sbHeaders() })
+      .then(function(r){ return r.json(); }).catch(function(){ return null; });
+  }
+
+  function sbUpsert(table, row) {
+    if (!USE_SUPABASE) return Promise.resolve(null);
+    return fetch(SUPABASE_URL + "/rest/v1/" + table, {
+      method: "POST",
+      headers: Object.assign({}, sbHeaders(), { "Prefer":"resolution=merge-duplicates" }),
+      body: JSON.stringify(row)
+    }).catch(function(){});
+  }
+
+  function sbDelete(table, filters) {
+    if (!USE_SUPABASE) return Promise.resolve(null);
+    var qs = Object.keys(filters).map(function(k){ return k + "=eq." + encodeURIComponent(filters[k]); }).join("&");
+    return fetch(SUPABASE_URL + "/rest/v1/" + table + "?" + qs, { method:"DELETE", headers: sbHeaders() }).catch(function(){});
+  }
+
+  /* ---- TICKS ---- */
+  function getTick(id, cb) {
+    if (!USE_SUPABASE) { cb(local.get("done:" + id) === "1"); return; }
+    sbGet("ticks", { item_id: id }).then(function(rows) {
+      cb(rows && rows.length > 0 && rows[0].done);
+    });
+  }
+
+  function setTick(id, val, cb) {
+    local.set("done:" + id, val ? "1" : "0");
+    if (!USE_SUPABASE) { cb && cb(); return; }
+    sbUpsert("ticks", { item_id: id, done: val }).then(function(){ cb && cb(); });
+  }
+
+  /* ---- NOTES ---- */
+  function getNotes(key, cb) {
+    if (!USE_SUPABASE) { cb(local.get("notes:" + key) || ""); return; }
+    sbGet("notes", { teacher: key }).then(function(rows) {
+      cb(rows && rows.length ? rows[0].content : "");
+    });
+  }
+
+  function setNotes(key, val) {
+    local.set("notes:" + key, val);
+    if (!USE_SUPABASE) return;
+    sbUpsert("notes", { teacher: key, content: val });
+  }
+
+  /* ---- LINKS ---- */
+  function getLinks(itemId, cb) {
+    if (!USE_SUPABASE) {
+      try { cb(JSON.parse(local.get("links:" + itemId) || "[]")); } catch(e) { cb([]); }
+      return;
+    }
+    sbGet("links", { item_id: itemId }).then(function(rows) { cb(rows || []); });
+  }
+
+  function addLink(itemId, label, url, cb) {
+    if (!USE_SUPABASE) {
+      getLinks(itemId, function(links) {
+        var id = "l" + Date.now();
+        links.push({ id: id, item_id: itemId, label: label, url: url });
+        local.set("links:" + itemId, JSON.stringify(links));
+        cb && cb();
+      });
+      return;
+    }
+    sbUpsert("links", { id: "l" + Date.now(), item_id: itemId, label: label, url: url }).then(function(){ cb && cb(); });
+  }
+
+  function deleteLink(linkId, itemId, cb) {
+    if (!USE_SUPABASE) {
+      getLinks(itemId, function(links) {
+        var filtered = links.filter(function(l){ return l.id !== linkId; });
+        local.set("links:" + itemId, JSON.stringify(filtered));
+        cb && cb();
+      });
+      return;
+    }
+    sbDelete("links", { id: linkId }).then(function(){ cb && cb(); });
+  }
+
+  /* ---- MESSAGES ---- */
+  function getMessages(teacher, cb) {
+    if (!USE_SUPABASE) {
+      try { cb(JSON.parse(local.get("msgs:" + teacher) || "[]")); } catch(e) { cb([]); }
+      return;
+    }
+    sbGet("messages", { teacher: teacher }).then(function(rows) {
+      cb((rows || []).sort(function(a,b){ return new Date(a.created_at) - new Date(b.created_at); }));
+    });
+  }
+
+  function addMessage(teacher, from, text, cb) {
+    var msg = { id: "m" + Date.now(), teacher: teacher, from: from, text: text, created_at: new Date().toISOString() };
+    if (!USE_SUPABASE) {
+      getMessages(teacher, function(msgs) {
+        msgs.push(msg);
+        local.set("msgs:" + teacher, JSON.stringify(msgs));
+        cb && cb();
+      });
+      return;
+    }
+    sbUpsert("messages", msg).then(function(){ cb && cb(); });
+  }
+
+  /* ---- UTILITIES ---- */
+  var TODAY = new Date();
+  function dInt(s) { return new Date(s + "T00:00:00"); }
+  function daysFrom(s) { return Math.ceil((dInt(s) - TODAY) / 86400000); }
+  function activeTerm() {
+    for (var i=0; i<TERMS.length; i++) {
+      if (TODAY >= dInt(TERMS[i].start) && TODAY <= dInt(TERMS[i].end)) return TERMS[i].n;
+    }
+    return null;
+  }
+  function esc(s) {
+    return String(s||"").replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; });
+  }
+  function fmt(d) {
+    return new Date(d).toLocaleDateString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+  }
+  function allItems(key) { return TEACHERS[key].items.concat(SHARED); }
+  function lookupItem(key, id) {
+    var arr = allItems(key);
+    for (var i=0; i<arr.length; i++) { if (arr[i].id===id) return arr[i]; }
+    return null;
+  }
+  function kindLabel(t) { return {report:"Reporting",exam:"Exam date",obs:"Observation",deliv:"Deliverable"}[t]||"Item"; }
+  function canEdit(panelKey) { return WHO==="alex" || WHO===panelKey; }
+
+  /* ---- COMING UP ---- */
+  function renderComingUp() {
+    var upcoming = CU_POOL.filter(function(x){ return daysFrom(x.date)>=0; })
+      .sort(function(a,b){ return dInt(a.date)-dInt(b.date); }).slice(0,5);
+    var el = document.getElementById("cuGrid");
+    var tod = document.getElementById("cuToday");
+    if (tod) tod.textContent = "Today is " + TODAY.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    if (!upcoming.length) { el.innerHTML='<div class="cu-card"><div class="cu-title">Nothing scheduled. Enjoy the gap.</div></div>'; return; }
+    el.innerHTML = upcoming.map(function(x){
+      var d = daysFrom(x.date);
+      var cls = "cu-card" + (x.pencil?" pencil":"") + (x.type==="holiday"?" holiday":"") + (x.type==="term-event"?" term-event":"");
+      return '<div class="'+cls+'">' +
+        '<div class="cu-num">'+(d===0?"Today":d)+'<span class="cu-unit">'+(d===0?"":d===1?"day away":"days away")+'</span></div>' +
+        '<div class="cu-title">'+esc(x.title)+'</div>' +
+        (x.pencil?'<div class="cu-when">Pencilled</div>':'') +
+        '</div>';
+    }).join("");
+  }
+
+  /* ---- PANEL BUILD ---- */
+  function buildPanel(panelEl) {
+    var key = panelEl.dataset.key;
+    var t = TEACHERS[key];
+    var now = activeTerm();
+    var showExam = key==="alex";
+
+    var head = '<div class="p-head">' +
+      '<div class="p-name">'+esc(t.name)+'</div>' +
+      '<div class="p-role">'+esc(t.role)+'</div>' +
+      '<div class="p-summary">'+esc(t.summary)+'</div>' +
+      (WHO!=="alex" && WHO!==key ? '<span class="readonly-badge">Read only for you</span>' : '') +
+      '</div>';
+
+    var legend = '<div class="legend">' +
+      '<span class="leg-item"><i class="pip deliv"></i>Deliverable</span>' +
+      '<span class="leg-item"><i class="pip report"></i>Reporting</span>' +
+      '<span class="leg-item"><i class="pip obs"></i>Observation</span>' +
+      (showExam?'<span class="leg-item"><i class="pip exam"></i>Exam date</span>':'') +
+      '</div>';
+
+    var cols = TERMS.map(function(term){
+      var nodes = allItems(key).filter(function(it){ return it.term===term.n; }).map(function(it){
+        return '<button class="node '+it.type+'" data-id="'+it.id+'" aria-pressed="false">' +
+          '<span class="done-tick" aria-hidden="true">&#x2713;</span>' +
+          '<span class="ntitle">'+esc(it.title)+'</span>' +
+          '<span class="nwhen">'+esc(it.when)+'</span>' +
+          '</button>';
+      }).join("");
+      var isNow = now===term.n;
+      return '<div class="tl-col'+(isNow?" now":"")+'">' +
+        '<div class="tl-h"><div class="tname">'+term.label+(isNow?'<span class="now-tag">Now</span>':'')+'</div>' +
+        '<div class="tdates">'+term.dates+'</div></div>' +
+        '<div class="tl-b">'+nodes+'</div></div>';
+    }).join("");
+
+    var detail = '<div class="detail" id="det-'+key+'"><p class="det-empty">Select an item to see what it involves.</p></div>';
+    var notesBlock = '<div class="notes-wrap">' +
+      '<label class="notes-label" for="notes-'+key+'">Notes</label>' +
+      '<textarea class="notes-ta" id="notes-'+key+'" placeholder="Anything to keep track of this term."'+(canEdit(key)?'':' disabled')+'></textarea>' +
+      '<div class="notes-saved" id="saved-'+key+'"></div></div>';
+
+    var feedback = '<div class="feedback-wrap">' +
+      '<div class="feedback-head">Feedback thread'+(WHO==="alex"?' · '+esc(t.name):'')+'</div>' +
+      '<div class="thread" id="thread-'+key+'"><p class="msg-empty">No messages yet.</p></div>' +
+      '<div class="msg-compose">' +
+      '<textarea class="msg-input" id="msg-input-'+key+'" rows="2" placeholder="Write a message..."></textarea>' +
+      '<button class="btn-sm" id="msg-send-'+key+'">Send</button>' +
+      '</div></div>';
+
+    panelEl.innerHTML = head + legend + '<div class="tl">'+cols+'</div>' + detail + notesBlock + feedback;
+  }
+
+  /* ---- WIRE PANEL ---- */
+  function wirePanel(panelEl) {
+    var key = panelEl.dataset.key;
+
+    // Load ticks
+    allItems(key).forEach(function(it) {
+      getTick(it.id, function(done) {
+        var btn = panelEl.querySelector('.node[data-id="'+it.id+'"]');
+        if (btn) btn.classList.toggle("done", done);
+      });
+    });
+
+    // Load notes
+    getNotes(key, function(val) {
+      var ta = document.getElementById("notes-"+key);
+      if (ta) ta.value = val;
+    });
+
+    // Notes save
+    var ta = document.getElementById("notes-"+key);
+    if (ta && canEdit(key)) {
+      var savedEl = document.getElementById("saved-"+key);
+      var timer;
+      ta.addEventListener("input", function() {
+        setNotes(key, ta.value);
+        clearTimeout(timer);
+        if (savedEl) { savedEl.textContent = "Saved"; timer = setTimeout(function(){ savedEl.textContent=""; }, 1600); }
+      });
+    }
+
+    // Node clicks
+    panelEl.querySelectorAll(".node").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        panelEl.querySelectorAll(".node").forEach(function(b){ b.setAttribute("aria-pressed","false"); });
+        btn.setAttribute("aria-pressed","true");
+        showDetail(panelEl, key, btn.dataset.id);
+      });
+    });
+
+    // Feedback thread
+    loadThread(key);
+    var sendBtn = document.getElementById("msg-send-"+key);
+    if (sendBtn) {
+      sendBtn.addEventListener("click", function() {
+        var inp = document.getElementById("msg-input-"+key);
+        var txt = (inp.value||"").trim();
+        if (!txt) return;
+        inp.value = "";
+        addMessage(key, WHO, txt, function() { loadThread(key); });
+      });
+    }
+  }
+
+  function loadThread(key) {
+    getMessages(key, function(msgs) {
+      var el = document.getElementById("thread-"+key);
+      if (!el) return;
+      if (!msgs.length) { el.innerHTML='<p class="msg-empty">No messages yet.</p>'; return; }
+      el.innerHTML = msgs.map(function(m) {
+        var isAlex = m.from==="alex";
+        return '<div class="msg '+(isAlex?"from-alex":"from-other")+'">' +
+          esc(m.text) +
+          '<div class="msg-meta">'+(isAlex?"Alex":TEACHERS[m.from]?TEACHERS[m.from].name:m.from)+' · '+fmt(m.created_at)+'</div>' +
+          '</div>';
+      }).join("");
+      el.scrollTop = el.scrollHeight;
+    });
+  }
+
+  /* ---- DETAIL ---- */
+  function showDetail(panelEl, key, id) {
+    var it = lookupItem(key, id);
+    var box = document.getElementById("det-"+key);
+    if (!it || !box) return;
+
+    var chips = (it.chips||[]).map(function(c){ return '<span class="chip">'+esc(c)+'</span>'; }).join("");
+    var editable = canEdit(key);
+
+    box.innerHTML =
+      '<div class="det-kind">'+kindLabel(it.type)+(it.pencil?" · pencilled":"")+'</div>' +
+      '<div class="det-title">'+esc(it.title)+'</div>' +
+      '<div class="det-when">'+esc(it.when)+'</div>' +
+      '<div class="det-body">'+esc(it.detail)+'</div>' +
+      (chips?'<div class="det-chips">'+chips+'</div>':'') +
+      '<label class="chk-label'+(editable?'':' disabled')+'">' +
+        '<input type="checkbox" id="chk-'+it.id+'"'+(editable?'':' disabled')+'>' +
+        '<span class="chk-box"></span>Mark as done' +
+      '</label>' +
+      '<div class="links-section" id="links-'+it.id+'">' +
+        '<div class="links-head">Attached files and links</div>' +
+        '<div class="link-list" id="ll-'+it.id+'"><span style="font-size:0.8rem;color:var(--ink-soft)">Loading...</span></div>' +
+        (editable ?
+          '<div class="link-add">' +
+            '<input class="link-label-input" id="linput-label-'+it.id+'" type="text" placeholder="Label">' +
+            '<input class="link-input" id="linput-url-'+it.id+'" type="url" placeholder="Paste a link (Google Drive, etc.)">' +
+            '<button class="btn-sm" id="ladd-'+it.id+'">Add</button>' +
+          '</div>' : ''
+        ) +
+      '</div>';
+
+    // Tick state
+    getTick(it.id, function(done) {
+      var chk = document.getElementById("chk-"+it.id);
+      if (chk) {
+        chk.checked = done;
+        chk.addEventListener("change", function() {
+          setTick(it.id, chk.checked, function() {
+            var node = panelEl.querySelector('.node[data-id="'+it.id+'"]');
+            if (node) node.classList.toggle("done", chk.checked);
+          });
+        });
+      }
+    });
+
+    // Links
+    renderLinks(it.id, editable, panelEl, key);
+    if (editable) {
+      var addBtn = document.getElementById("ladd-"+it.id);
+      if (addBtn) {
+        addBtn.addEventListener("click", function() {
+          var labelEl = document.getElementById("linput-label-"+it.id);
+          var urlEl   = document.getElementById("linput-url-"+it.id);
+          var label   = (labelEl.value||"").trim();
+          var url     = (urlEl.value||"").trim();
+          if (!url) return;
+          if (!label) label = url;
+          addBtn.disabled = true;
+          addLink(it.id, label, url, function() {
+            labelEl.value=""; urlEl.value="";
+            addBtn.disabled = false;
+            renderLinks(it.id, editable, panelEl, key);
+          });
+        });
+      }
+    }
+  }
+
+  function renderLinks(itemId, editable, panelEl, key) {
+    getLinks(itemId, function(links) {
+      var el = document.getElementById("ll-"+itemId);
+      if (!el) return;
+      if (!links.length) { el.innerHTML='<span style="font-size:0.78rem;color:var(--ink-soft);font-style:italic">No files attached yet.</span>'; return; }
+      el.innerHTML = links.map(function(l) {
+        return '<div class="link-item">' +
+          '<a href="'+esc(l.url)+'" target="_blank" rel="noopener">'+esc(l.label||l.url)+'</a>' +
+          (editable?'<button class="link-del" data-lid="'+esc(l.id)+'" data-iid="'+esc(itemId)+'" title="Remove">&#x2715;</button>':'') +
+          '</div>';
+      }).join("");
+      if (editable) {
+        el.querySelectorAll(".link-del").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            deleteLink(btn.dataset.lid, btn.dataset.iid, function() {
+              renderLinks(itemId, editable, panelEl, key);
+            });
+          });
+        });
+      }
+    });
+  }
+
+  /* ---- TABS ---- */
+  var tabs   = [].slice.call(document.querySelectorAll('[role="tab"]'));
+  var panels = [].slice.call(document.querySelectorAll('[role="tabpanel"]'));
+
+  function selectTab(tab) {
+    tabs.forEach(function(t){ var on=t===tab; t.setAttribute("aria-selected",on?"true":"false"); t.tabIndex=on?0:-1; });
+    panels.forEach(function(p){ p.hidden = p.id!==tab.getAttribute("aria-controls"); });
+  }
+
+  tabs.forEach(function(tab, i) {
+    tab.addEventListener("click", function(){ selectTab(tab); });
+    tab.addEventListener("keydown", function(e) {
+      var next;
+      if (e.key==="ArrowRight") next=tabs[(i+1)%tabs.length];
+      else if (e.key==="ArrowLeft") next=tabs[(i-1+tabs.length)%tabs.length];
+      else if (e.key==="Home") next=tabs[0];
+      else if (e.key==="End") next=tabs[tabs.length-1];
+      if (next){ e.preventDefault(); selectTab(next); next.focus(); }
+    });
+  });
+
+  /* ---- WHO SCREEN ---- */
+  function boot(who) {
+    WHO = who;
+    local.set("who", who);
+    document.getElementById("whoScreen").style.display = "none";
+    document.getElementById("app").style.display = "";
+    document.getElementById("mastName").textContent = TEACHERS[who].name;
+    renderComingUp();
+    panels.forEach(function(p){ buildPanel(p); wirePanel(p); });
+    if (!USE_SUPABASE) {
+      status("Running in local mode. Add Supabase keys to enable shared sync across devices.");
+    }
+  }
+
+  document.querySelectorAll(".who-btn").forEach(function(btn) {
+    btn.addEventListener("click", function(){ boot(btn.dataset.who); });
+  });
+
+  document.getElementById("switchBtn").addEventListener("click", function() {
+    local.set("who","");
+    WHO=null;
+    document.getElementById("whoScreen").style.display="flex";
+    document.getElementById("app").style.display="none";
+  });
+
+  // Auto-boot if remembered
+  var remembered = local.get("who");
+  if (remembered && TEACHERS[remembered]) {
+    boot(remembered);
+  }
+
+})();
+</script>
+</body>
+</html>
