@@ -593,8 +593,7 @@
 
 
 
-        { id:"alex-t4",     term:4, type:"deliv", title:"Submission and Commencement", when:"From early April", detail:"Component 2 handover, then submission prep: photograph, AO-check, and assemble both components to the 20-page digital limit.", chips:["Commencement lead"] }
-      ,
+        { id:"alex-t4",     term:4, type:"deliv", title:"Submission and Commencement", when:"From early April", detail:"Component 2 handover, then submission prep: photograph, AO-check, and assemble both components to the 20-page digital limit.", chips:["Commencement lead"] },
         { id:"alex-ra1", term:1, type:"report", title:"Report and Analysis document", when:"Last day of Term 1 · 8 Oct", date:"2026-10-09", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"alex-ra2", term:2, type:"report", title:"Report and Analysis document", when:"Last day of Term 2 · 18 Dec", date:"2026-12-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"alex-ra3", term:3, type:"report", title:"Report and Analysis document", when:"Last day of Term 3 · 18 Mar", date:"2027-03-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
@@ -613,8 +612,7 @@
 
 
 
-        { id:"emma-t4",   term:4, type:"deliv", title:"Commencement contribution", when:"Term 4",             detail:"Contribution to the Commencement display and event." }
-      ,
+        { id:"emma-t4",   term:4, type:"deliv", title:"Commencement contribution", when:"Term 4",             detail:"Contribution to the Commencement display and event." },
         { id:"emma-ra1", term:1, type:"report", title:"Report and Analysis document", when:"Last day of Term 1 · 8 Oct", date:"2026-10-09", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"emma-ra2", term:2, type:"report", title:"Report and Analysis document", when:"Last day of Term 2 · 18 Dec", date:"2026-12-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"emma-ra3", term:3, type:"report", title:"Report and Analysis document", when:"Last day of Term 3 · 18 Mar", date:"2027-03-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
@@ -632,8 +630,7 @@
 
 
 
-        { id:"scar-t4",   term:4, type:"deliv", title:"Khmer New Year and Commencement", when:"Term 4",      detail:"Khmer New Year installation around 14 to 16 April, then Commencement contribution." }
-      ,
+        { id:"scar-t4",   term:4, type:"deliv", title:"Khmer New Year and Commencement", when:"Term 4",      detail:"Khmer New Year installation around 14 to 16 April, then Commencement contribution." },
         { id:"scar-ra1", term:1, type:"report", title:"Report and Analysis document", when:"Last day of Term 1 · 8 Oct", date:"2026-10-09", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"scar-ra2", term:2, type:"report", title:"Report and Analysis document", when:"Last day of Term 2 · 18 Dec", date:"2026-12-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"scar-ra3", term:3, type:"report", title:"Report and Analysis document", when:"Last day of Term 3 · 18 Mar", date:"2027-03-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
@@ -876,14 +873,12 @@
       '</div>';
 
     var cols = TERMS.map(function(term){
-      var termItems = allItems(key).filter(function(it){ return it.term===term.n; });
-      termItems.sort(function(a,b){
+      var nodes = allItems(key).filter(function(it){ return it && it.term===term.n; }).sort(function(a,b){
         if (!a.date && !b.date) return 0;
         if (!a.date) return 1;
         if (!b.date) return -1;
         return dInt(a.date) - dInt(b.date);
-      });
-      var nodes = termItems.map(function(it){
+      }).map(function(it){
         return '<button class="node '+it.type+'" data-id="'+it.id+'" aria-pressed="false">' +
           '<span class="done-tick" aria-hidden="true">&#x2713;</span>' +
           '<span class="ntitle">'+esc(it.title)+'</span>' +
