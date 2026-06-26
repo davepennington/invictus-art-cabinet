@@ -876,7 +876,14 @@
       '</div>';
 
     var cols = TERMS.map(function(term){
-      var nodes = allItems(key).filter(function(it){ return it.term===term.n; }).map(function(it){
+      var termItems = allItems(key).filter(function(it){ return it.term===term.n; });
+      termItems.sort(function(a,b){
+        if (!a.date && !b.date) return 0;
+        if (!a.date) return 1;
+        if (!b.date) return -1;
+        return dInt(a.date) - dInt(b.date);
+      });
+      var nodes = termItems.map(function(it){
         return '<button class="node '+it.type+'" data-id="'+it.id+'" aria-pressed="false">' +
           '<span class="done-tick" aria-hidden="true">&#x2713;</span>' +
           '<span class="ntitle">'+esc(it.title)+'</span>' +
