@@ -155,6 +155,46 @@
   .cu-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-top: 8px; }
   .cu-when { font-size: 1.2rem; color: var(--ink-soft); margin-top: 2px; }
 
+  /* ---- PURCHASE REQUESTS ---- */
+  .pr-wrap {
+    margin-top: 40px; padding: 60px 56px 64px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,200,67,0.26);
+    border-radius: var(--r);
+  }
+  .pr-head-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px; margin-bottom: 14px;
+  }
+  .pr-head {
+    font-size: 1.24rem; font-weight: 800;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .pr-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,0.55);
+  }
+  .pr-open-btn {
+    appearance: none; border: none; cursor: pointer;
+    font-family: var(--body); font-size: 1.05rem; font-weight: 700;
+    color: var(--navy-ink); background: var(--gold);
+    padding: 12px 22px; border-radius: var(--r);
+    text-decoration: none; display: inline-block;
+    transition: background 0.14s;
+  }
+  .pr-open-btn:hover { background: var(--amber); }
+  .pr-frame-box {
+    background: var(--cream); border-radius: var(--r);
+    overflow: hidden; border: 1px solid var(--cream-edge);
+  }
+  .pr-frame-box iframe {
+    width: 100%; height: 560px; border: none; display: block;
+  }
+  .pr-note {
+    font-size: 0.92rem; color: rgba(255,255,255,0.4);
+    margin-top: 12px;
+  }
+
   /* ---- TABS ---- */
   .tabs { display: flex; gap: 4px; margin: 80px 0 0; justify-content: center; }
   .tab {
@@ -477,6 +517,20 @@
   <section class="panel" id="panel-alex" role="tabpanel" aria-labelledby="tab-alex" tabindex="0" data-key="alex" hidden></section>
   <section class="panel" id="panel-emma" role="tabpanel" aria-labelledby="tab-emma" tabindex="0" data-key="emma" hidden></section>
   <section class="panel" id="panel-scarlett" role="tabpanel" aria-labelledby="tab-scarlett" tabindex="0" data-key="scarlett"></section>
+
+  <section class="pr-wrap" aria-label="Purchase requests">
+    <div class="pr-head-row">
+      <div>
+        <div class="pr-head">Purchase Requests</div>
+        <div class="pr-sub">Shared list, add anything you need ordering here</div>
+      </div>
+      <a class="pr-open-btn" href="https://docs.google.com/spreadsheets/d/1wLZIwnyCByXx6ycMGWWa2VkXcjeLeLvB/edit?usp=sharing" target="_blank" rel="noopener">Open &amp; edit sheet &#8599;</a>
+    </div>
+    <div class="pr-frame-box">
+      <iframe src="https://docs.google.com/spreadsheets/d/1wLZIwnyCByXx6ycMGWWa2VkXcjeLeLvB/preview" loading="lazy" title="Purchase requests spreadsheet"></iframe>
+    </div>
+    <div class="pr-note">Live view updates automatically. Use "Open &amp; edit sheet" to add or amend items.</div>
+  </section>
 
   <div style="height:120px;"></div>
 
