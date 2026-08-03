@@ -155,6 +155,46 @@
   .cu-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-top: 8px; }
   .cu-when { font-size: 1.2rem; color: var(--ink-soft); margin-top: 2px; }
 
+  /* ---- PURCHASE REQUESTS ---- */
+  .pr-wrap {
+    margin-top: 40px; padding: 60px 56px 64px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,200,67,0.26);
+    border-radius: var(--r);
+  }
+  .pr-head-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px; margin-bottom: 14px;
+  }
+  .pr-head {
+    font-size: 1.24rem; font-weight: 800;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .pr-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,0.55);
+  }
+  .pr-open-btn {
+    appearance: none; border: none; cursor: pointer;
+    font-family: var(--body); font-size: 1.05rem; font-weight: 700;
+    color: var(--navy-ink); background: var(--gold);
+    padding: 12px 22px; border-radius: var(--r);
+    text-decoration: none; display: inline-block;
+    transition: background 0.14s;
+  }
+  .pr-open-btn:hover { background: var(--amber); }
+  .pr-frame-box {
+    background: var(--cream); border-radius: var(--r);
+    overflow: hidden; border: 1px solid var(--cream-edge);
+  }
+  .pr-frame-box iframe {
+    width: 100%; height: 280px; border: none; display: block;
+  }
+  .pr-note {
+    font-size: 0.92rem; color: rgba(255,255,255,0.4);
+    margin-top: 12px;
+  }
+
   /* ---- TABS ---- */
   .tabs { display: flex; gap: 4px; margin: 80px 0 0; justify-content: center; }
   .tab {
@@ -187,6 +227,46 @@
     color: var(--ink-soft); background: var(--cream-edge);
     padding: 3px 10px; border-radius: 20px;
   }
+
+  /* ---- CURRICULUM FILES ---- */
+  .curric-wrap {
+    background: var(--navy); border: 1px solid var(--navy-ink);
+    border-radius: var(--r); padding: 26px 28px; margin-bottom: 44px;
+  }
+  .curric-head {
+    font-size: 1.1rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .curric-sub { font-size: 1.05rem; color: rgba(255,255,255,0.62); margin-bottom: 16px; }
+  .curric-list { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 4px; }
+  .curric-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--cream); color: var(--navy); text-decoration: none;
+    font-family: var(--body); font-size: 1.05rem; font-weight: 700;
+    padding: 11px 16px; border-radius: 10px;
+    transition: background 0.14s;
+  }
+  .curric-btn:hover { background: #fff; }
+  .curric-btn .curric-lock { color: var(--ink-soft); font-size: 0.85rem; flex-shrink: 0; }
+  .curric-btn .curric-del {
+    appearance: none; border: none; background: rgba(22,40,79,0.14);
+    color: var(--navy); border-radius: 50%; width: 18px; height: 18px;
+    font-size: 0.8rem; line-height: 1; cursor: pointer; flex-shrink: 0;
+  }
+  .curric-empty { font-size: 0.95rem; color: rgba(255,255,255,0.55); font-style: italic; }
+  .curric-add {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
+    padding-top: 16px; border-top: 1px dashed rgba(255,255,255,0.2);
+  }
+  .curric-add input {
+    font-family: var(--body); font-size: 1rem;
+    border: 1px solid var(--cream-edge); border-radius: 8px;
+    padding: 10px 12px; background: #fff;
+  }
+  .curric-add input[type="text"] { flex: 1 1 180px; }
+  .curric-add input[type="url"] { flex: 2 1 260px; }
+  .curric-add .btn-sm { background: var(--gold); color: var(--navy-ink); }
+  .curric-add .btn-sm:hover { background: var(--amber); filter: none; }
 
   /* ---- LEGEND ---- */
   .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; font-size: 1.15rem; font-weight: 700; color: var(--ink-soft); }
@@ -478,6 +558,20 @@
   <section class="panel" id="panel-emma" role="tabpanel" aria-labelledby="tab-emma" tabindex="0" data-key="emma" hidden></section>
   <section class="panel" id="panel-scarlett" role="tabpanel" aria-labelledby="tab-scarlett" tabindex="0" data-key="scarlett"></section>
 
+  <section class="pr-wrap" aria-label="Purchase requests">
+    <div class="pr-head-row">
+      <div>
+        <div class="pr-head">Purchase Requests</div>
+        <div class="pr-sub">Shared list, add anything you need ordering here</div>
+      </div>
+      <a class="pr-open-btn" href="https://docs.google.com/spreadsheets/d/1wLZIwnyCByXx6ycMGWWa2VkXcjeLeLvB/edit?usp=sharing" target="_blank" rel="noopener">Open &amp; edit sheet &#8599;</a>
+    </div>
+    <div class="pr-frame-box">
+      <iframe src="https://docs.google.com/spreadsheets/d/1wLZIwnyCByXx6ycMGWWa2VkXcjeLeLvB/preview" loading="lazy" title="Purchase requests spreadsheet"></iframe>
+    </div>
+    <div class="pr-note">Live view updates automatically. Use "Open &amp; edit sheet" to add or amend items.</div>
+  </section>
+
   <div style="height:120px;"></div>
 
   <footer class="footer">
@@ -751,17 +845,18 @@
     sbGet("links", { item_id: itemId }).then(function(rows) { cb(rows || []); });
   }
 
-  function addLink(itemId, label, url, cb) {
+  function addLink(itemId, label, url, cb, locked) {
+    var idPrefix = locked ? "lock-" : "open-";
     if (!USE_SUPABASE) {
       getLinks(itemId, function(links) {
-        var id = "l" + Date.now();
+        var id = idPrefix + "l" + Date.now();
         links.push({ id: id, item_id: itemId, label: label, url: url });
         local.set("links:" + itemId, JSON.stringify(links));
         cb && cb();
       });
       return;
     }
-    sbUpsert("links", { id: "l" + Date.now(), item_id: itemId, label: label, url: url }).then(function(){ cb && cb(); });
+    sbUpsert("links", { id: idPrefix + "l" + Date.now(), item_id: itemId, label: label, url: url }).then(function(){ cb && cb(); });
   }
 
   function deleteLink(linkId, itemId, cb) {
@@ -865,6 +960,20 @@
       (WHO!=="alex" && WHO!==key ? '<span class="readonly-badge">Read only for you</span>' : '') +
       '</div>';
 
+    var curricLabel = key==="scarlett" ? "Primary" : (key==="emma" ? "Lower Secondary" : "Upper Secondary");
+    var curricBlock = '<div class="curric-wrap">' +
+      '<div class="curric-head">Curriculum Files</div>' +
+      '<div class="curric-sub">'+esc(curricLabel)+' stage documents</div>' +
+      '<div class="curric-list" id="curric-list-'+key+'"><span style="font-size:0.9rem;color:var(--ink-soft)">Loading...</span></div>' +
+      (canEdit(key) ?
+        '<div class="curric-add">' +
+          '<input class="curric-name-input" id="curric-name-'+key+'" type="text" placeholder="Document name">' +
+          '<input class="curric-url-input" id="curric-url-'+key+'" type="url" placeholder="Paste a link (Google Drive, etc.)">' +
+          '<button class="btn-sm" id="curric-add-'+key+'">Add</button>' +
+        '</div>' : ''
+      ) +
+      '</div>';
+
     var legend = '<div class="legend">' +
       '<span class="leg-item"><i class="pip deliv"></i>Deliverable</span>' +
       '<span class="leg-item"><i class="pip report"></i>Reporting</span>' +
@@ -906,12 +1015,32 @@
       '<button class="btn-sm" id="msg-send-'+key+'">Send</button>' +
       '</div></div>';
 
-    panelEl.innerHTML = head + legend + '<div class="tl">'+cols+'</div>' + detail + notesBlock + feedback;
+    panelEl.innerHTML = head + curricBlock + legend + '<div class="tl">'+cols+'</div>' + detail + notesBlock + feedback;
   }
 
   /* ---- WIRE PANEL ---- */
   function wirePanel(panelEl) {
     var key = panelEl.dataset.key;
+
+    // Curriculum files
+    renderCurricFiles(key);
+    var curricAddBtn = document.getElementById("curric-add-"+key);
+    if (curricAddBtn && canEdit(key)) {
+      curricAddBtn.addEventListener("click", function() {
+        var nameEl = document.getElementById("curric-name-"+key);
+        var urlEl  = document.getElementById("curric-url-"+key);
+        var name   = (nameEl.value||"").trim();
+        var url    = (urlEl.value||"").trim();
+        if (!url) return;
+        if (!name) name = url;
+        curricAddBtn.disabled = true;
+        addLink(curricId(key), name, url, function() {
+          nameEl.value=""; urlEl.value="";
+          curricAddBtn.disabled = false;
+          renderCurricFiles(key);
+        }, WHO==="alex");
+      });
+    }
 
     // Load ticks
     allItems(key).forEach(function(it) {
@@ -1045,6 +1174,35 @@
         });
       }
     }
+  }
+
+  function curricId(key) { return "curric-" + key; }
+
+  function renderCurricFiles(key) {
+    var itemId = curricId(key);
+    var editable = canEdit(key);
+    getLinks(itemId, function(files) {
+      var el = document.getElementById("curric-list-"+key);
+      if (!el) return;
+      if (!files.length) { el.innerHTML = '<span class="curric-empty">No documents added yet.</span>'; return; }
+      el.innerHTML = files.map(function(f) {
+        var locked = String(f.id||"").indexOf("lock-") === 0;
+        var showDel = editable && (!locked || WHO==="alex");
+        return '<span class="curric-btn">' +
+          '<a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+esc(f.label||f.url)+'</a>' +
+          (showDel ? '<button class="curric-del" data-lid="'+esc(f.id)+'" data-key="'+esc(key)+'" title="Remove">&#x2715;</button>' :
+            (locked ? '<span class="curric-lock" title="Added by coordinator, locked">&#128274;</span>' : '')
+          ) +
+          '</span>';
+      }).join("");
+      if (editable) {
+        el.querySelectorAll(".curric-del").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            deleteLink(btn.dataset.lid, itemId, function() { renderCurricFiles(btn.dataset.key); });
+          });
+        });
+      }
+    });
   }
 
   function renderLinks(itemId, editable, panelEl, key) {
