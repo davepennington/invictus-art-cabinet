@@ -90,6 +90,37 @@
   }
   .who-btn:hover .wb-av { background: var(--white); color: var(--navy); }
 
+  /* ---- PASSWORD STEP ---- */
+  .pw-back {
+    text-align: left; font-size: 1.1rem; font-weight: 700;
+    color: var(--ink-soft); cursor: pointer; margin-bottom: 18px;
+  }
+  .pw-back:hover { color: var(--navy); }
+  .pw-who { font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: 16px; text-align: left; }
+  .pw-input {
+    width: 100%; font-family: var(--body); font-size: 1.3rem;
+    border: 2px solid var(--navy); border-radius: var(--r);
+    padding: 12px 14px; margin-bottom: 8px; box-sizing: border-box;
+  }
+  .pw-error {
+    color: #b3261e; font-size: 1.1rem; font-weight: 600;
+    text-align: left; margin-bottom: 8px;
+  }
+  .pw-continue {
+    appearance: none; border: none; cursor: pointer; width: 100%;
+    font-family: var(--body); font-size: 1.32rem; font-weight: 700;
+    background: var(--navy); color: var(--white);
+    padding: 13px 20px; border-radius: var(--r); margin-top: 8px;
+  }
+  .pw-continue:hover { filter: brightness(1.14); }
+  .pw-viewonly {
+    appearance: none; border: none; background: none; cursor: pointer;
+    font-family: var(--body); font-size: 1.05rem; font-weight: 600;
+    color: var(--ink-soft); text-decoration: underline;
+    margin-top: 14px; width: 100%;
+  }
+  .pw-viewonly:hover { color: var(--navy); }
+
   /* ---- MASTHEAD ---- */
   .mast {
     display: flex; align-items: flex-end;
@@ -524,6 +555,15 @@
         <span><span>Alex</span><span class="wb-role">Upper Secondary Art</span></span>
       </button>
     </div>
+
+    <div class="pw-step" id="pwStep" style="display:none;">
+      <div class="pw-back" id="pwBack">&#8592; Back</div>
+      <div class="pw-who" id="pwWho"></div>
+      <input class="pw-input" id="pwInput" type="password" placeholder="Password" autocomplete="off">
+      <div class="pw-error" id="pwError" style="display:none;">Incorrect password, try again.</div>
+      <button class="pw-continue" id="pwContinue">Continue</button>
+      <button class="pw-viewonly" id="pwViewOnly">Continue without password (view only)</button>
+    </div>
   </div>
 </div>
 
@@ -769,6 +809,15 @@
 
   /* ---- STATE ---- */
   var WHO = null;
+  var AUTHED = false;
+
+  /* ---- PASSWORDS: edit these three values to set each person's edit password.
+     Viewing the page never needs a password, this only gates editing. ---- */
+  var PASSWORDS = {
+    scarlett: "ART1",
+    emma:     "ART2",
+    alex:     "ART3"
+  };
 
   /* ---- STORAGE: local fallback when Supabase not yet wired ---- */
   var local = {
@@ -918,7 +967,7 @@
     return null;
   }
   function kindLabel(t) { return {report:"Reporting",exam:"Exam date",obs:"Observation",deliv:"Deliverable"}[t]||"Item"; }
-  function canEdit(panelKey) { return WHO==="alex" || WHO===panelKey; }
+  function canEdit(panelKey) { return AUTHED && (WHO==="alex" || WHO===panelKey); }
 
   /* ---- COMING UP ---- */
   function renderComingUp() {
@@ -957,7 +1006,7 @@
       '<div class="p-name">'+esc(t.name)+'</div>' +
       '<div class="p-role">'+esc(t.role)+'</div>' +
       '<div class="p-summary">'+esc(t.summary)+'</div>' +
-      (WHO!=="alex" && WHO!==key ? '<span class="readonly-badge">Read only for you</span>' : '') +
+      (!canEdit(key) ? '<span class="readonly-badge">Read only for you</span>' : '') +
       '</div>';
 
     var curricLabel = key==="scarlett" ? "Primary" : (key==="emma" ? "Lower Secondary" : "Upper Secondary");
@@ -1250,12 +1299,14 @@
   });
 
   /* ---- WHO SCREEN ---- */
-  function boot(who) {
+  function boot(who, authed) {
     WHO = who;
+    AUTHED = !!authed;
     local.set("who", who);
+    local.set("authed:" + who, AUTHED ? "1" : "0");
     document.getElementById("whoScreen").style.display = "none";
     document.getElementById("app").style.display = "";
-    document.getElementById("mastName").textContent = TEACHERS[who].name;
+    document.getElementById("mastName").textContent = TEACHERS[who].name + (AUTHED ? "" : " (view only)");
     renderComingUp();
     panels.forEach(function(p){ buildPanel(p); wirePanel(p); });
     if (!USE_SUPABASE) {
@@ -1263,21 +1314,64 @@
     }
   }
 
+  var pendingWho = null;
+
+  function showPwStep(who) {
+    pendingWho = who;
+    document.getElementById("pwWho").textContent = TEACHERS[who].name;
+    document.getElementById("pwInput").value = "";
+    document.getElementById("pwError").style.display = "none";
+    document.querySelector(".who-btns").style.display = "none";
+    document.getElementById("pwStep").style.display = "block";
+    document.getElementById("pwInput").focus();
+  }
+
+  function hidePwStep() {
+    pendingWho = null;
+    document.getElementById("pwStep").style.display = "none";
+    document.querySelector(".who-btns").style.display = "flex";
+  }
+
   document.querySelectorAll(".who-btn").forEach(function(btn) {
-    btn.addEventListener("click", function(){ boot(btn.dataset.who); });
+    btn.addEventListener("click", function(){ showPwStep(btn.dataset.who); });
+  });
+
+  document.getElementById("pwBack").addEventListener("click", hidePwStep);
+
+  document.getElementById("pwViewOnly").addEventListener("click", function() {
+    if (!pendingWho) return;
+    boot(pendingWho, false);
+  });
+
+  function attemptPwLogin() {
+    if (!pendingWho) return;
+    var entered = document.getElementById("pwInput").value || "";
+    if (entered && entered === PASSWORDS[pendingWho]) {
+      boot(pendingWho, true);
+    } else {
+      document.getElementById("pwError").style.display = "block";
+    }
+  }
+
+  document.getElementById("pwContinue").addEventListener("click", attemptPwLogin);
+  document.getElementById("pwInput").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") attemptPwLogin();
   });
 
   document.getElementById("switchBtn").addEventListener("click", function() {
     local.set("who","");
     WHO=null;
+    AUTHED=false;
+    hidePwStep();
     document.getElementById("whoScreen").style.display="flex";
     document.getElementById("app").style.display="none";
   });
 
-  // Auto-boot if remembered
+  // Auto-boot if remembered (this device remembers both who you are and whether
+  // you unlocked editing last time, same as the original name-only behaviour)
   var remembered = local.get("who");
   if (remembered && TEACHERS[remembered]) {
-    boot(remembered);
+    boot(remembered, local.get("authed:" + remembered) === "1");
   }
 
 })();
