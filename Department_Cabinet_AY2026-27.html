@@ -550,6 +550,10 @@
         <span class="wb-av">E</span>
         <span><span>Emma</span><span class="wb-role">Lower Secondary Art</span></span>
       </button>
+      <button class="who-btn" data-who="fanny">
+        <span class="wb-av">F</span>
+        <span><span>Fanny</span><span class="wb-role">Year 8 Art</span></span>
+      </button>
       <button class="who-btn" data-who="alex">
         <span class="wb-av">A</span>
         <span><span>Alex</span><span class="wb-role">Upper Secondary Art</span></span>
@@ -591,11 +595,13 @@
   <div class="tabs" role="tablist" aria-label="Department members">
     <button class="tab" role="tab" id="tab-scarlett" aria-controls="panel-scarlett" aria-selected="true">Scarlett<span class="tab-sub">Primary</span></button>
     <button class="tab" role="tab" id="tab-emma" aria-controls="panel-emma" aria-selected="false" tabindex="-1">Emma<span class="tab-sub">Lower Secondary</span></button>
+    <button class="tab" role="tab" id="tab-fanny" aria-controls="panel-fanny" aria-selected="false" tabindex="-1">Fanny<span class="tab-sub">Year 8</span></button>
     <button class="tab" role="tab" id="tab-alex" aria-controls="panel-alex" aria-selected="false" tabindex="-1">Alex<span class="tab-sub">Upper Secondary</span></button>
   </div>
 
   <section class="panel" id="panel-alex" role="tabpanel" aria-labelledby="tab-alex" tabindex="0" data-key="alex" hidden></section>
   <section class="panel" id="panel-emma" role="tabpanel" aria-labelledby="tab-emma" tabindex="0" data-key="emma" hidden></section>
+  <section class="panel" id="panel-fanny" role="tabpanel" aria-labelledby="tab-fanny" tabindex="0" data-key="fanny" hidden></section>
   <section class="panel" id="panel-scarlett" role="tabpanel" aria-labelledby="tab-scarlett" tabindex="0" data-key="scarlett"></section>
 
   <section class="pr-wrap" aria-label="Purchase requests">
@@ -771,6 +777,22 @@
         { id:"scar-ra4", term:4, type:"report", title:"Report and Analysis document", when:"Last day of Term 4 · 17 Jun", date:"2027-06-18", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] }
       
       ]
+    },
+    fanny: {
+      name:"Fanny", role:"Lower Secondary Art · Year 8",
+      summary:"Teaches Year 8 art across both classes.",
+      items:[
+        { id:"fanny-t1",   term:1, type:"deliv", title:"Scheme of Work, Year 8", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Mid-term check-in"] },
+
+
+
+        { id:"fanny-t4",   term:4, type:"deliv", title:"Commencement contribution", when:"Term 4",             detail:"Contribution to the Commencement display and event." },
+        { id:"fanny-ra1", term:1, type:"report", title:"Report and Analysis document", when:"Last day of Term 1 · 8 Oct", date:"2026-10-09", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
+        { id:"fanny-ra2", term:2, type:"report", title:"Report and Analysis document", when:"Last day of Term 2 · 18 Dec", date:"2026-12-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
+        { id:"fanny-ra3", term:3, type:"report", title:"Report and Analysis document", when:"Last day of Term 3 · 18 Mar", date:"2027-03-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
+        { id:"fanny-ra4", term:4, type:"report", title:"Report and Analysis document", when:"Last day of Term 4 · 17 Jun", date:"2027-06-18", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] }
+      
+      ]
     }
   };
 
@@ -816,7 +838,8 @@
   var PASSWORDS = {
     scarlett: "ART1",
     emma:     "ART2",
-    alex:     "ART3"
+    alex:     "ART3",
+    fanny:    "ART4"
   };
 
   /* ---- STORAGE: local fallback when Supabase not yet wired ---- */
@@ -1001,6 +1024,7 @@
     var t = TEACHERS[key];
     var now = activeTerm();
     var showExam = key==="alex";
+    var showObs = allItems(key).some(function(it){ return it.type==="obs"; });
 
     var head = '<div class="p-head">' +
       '<div class="p-name">'+esc(t.name)+'</div>' +
@@ -1009,7 +1033,7 @@
       (!canEdit(key) ? '<span class="readonly-badge">Read only for you</span>' : '') +
       '</div>';
 
-    var curricLabel = key==="scarlett" ? "Primary" : (key==="emma" ? "Lower Secondary" : "Upper Secondary");
+    var curricLabel = key==="scarlett" ? "Primary" : (key==="emma" ? "Lower Secondary" : (key==="fanny" ? "Year 8" : "Upper Secondary"));
     var curricBlock = '<div class="curric-wrap">' +
       '<div class="curric-head">Curriculum Files</div>' +
       '<div class="curric-sub">'+esc(curricLabel)+' stage documents</div>' +
@@ -1026,7 +1050,7 @@
     var legend = '<div class="legend">' +
       '<span class="leg-item"><i class="pip deliv"></i>Deliverable</span>' +
       '<span class="leg-item"><i class="pip report"></i>Reporting</span>' +
-      '<span class="leg-item"><i class="pip obs"></i>Observation</span>' +
+      (showObs?'<span class="leg-item"><i class="pip obs"></i>Observation</span>':'') +
       (showExam?'<span class="leg-item"><i class="pip exam"></i>Exam date</span>':'') +
       '</div>';
 
