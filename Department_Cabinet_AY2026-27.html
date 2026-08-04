@@ -1047,6 +1047,19 @@
       ) +
       '</div>';
 
+    var generalBlock = '<div class="curric-wrap">' +
+      '<div class="curric-head">General Files</div>' +
+      '<div class="curric-sub">Anything else, not stage-specific</div>' +
+      '<div class="curric-list" id="general-list-'+key+'"><span style="font-size:0.9rem;color:var(--ink-soft)">Loading...</span></div>' +
+      (canEdit(key) ?
+        '<div class="curric-add">' +
+          '<input class="curric-name-input" id="general-name-'+key+'" type="text" placeholder="Document name">' +
+          '<input class="curric-url-input" id="general-url-'+key+'" type="url" placeholder="Paste a link (Google Drive, etc.)">' +
+          '<button class="btn-sm" id="general-add-'+key+'">Add</button>' +
+        '</div>' : ''
+      ) +
+      '</div>';
+
     var legend = '<div class="legend">' +
       '<span class="leg-item"><i class="pip deliv"></i>Deliverable</span>' +
       '<span class="leg-item"><i class="pip report"></i>Reporting</span>' +
@@ -1088,7 +1101,7 @@
       '<button class="btn-sm" id="msg-send-'+key+'">Send</button>' +
       '</div></div>';
 
-    panelEl.innerHTML = head + curricBlock + legend + '<div class="tl">'+cols+'</div>' + detail + notesBlock + feedback;
+    panelEl.innerHTML = head + curricBlock + generalBlock + legend + '<div class="tl">'+cols+'</div>' + detail + notesBlock + feedback;
   }
 
   /* ---- WIRE PANEL ---- */
@@ -1111,6 +1124,26 @@
           nameEl.value=""; urlEl.value="";
           curricAddBtn.disabled = false;
           renderCurricFiles(key);
+        }, WHO==="alex");
+      });
+    }
+
+    // General files
+    renderGeneralFiles(key);
+    var generalAddBtn = document.getElementById("general-add-"+key);
+    if (generalAddBtn && canEdit(key)) {
+      generalAddBtn.addEventListener("click", function() {
+        var nameEl = document.getElementById("general-name-"+key);
+        var urlEl  = document.getElementById("general-url-"+key);
+        var name   = (nameEl.value||"").trim();
+        var url    = (urlEl.value||"").trim();
+        if (!url) return;
+        if (!name) name = url;
+        generalAddBtn.disabled = true;
+        addLink(generalId(key), name, url, function() {
+          nameEl.value=""; urlEl.value="";
+          generalAddBtn.disabled = false;
+          renderGeneralFiles(key);
         }, WHO==="alex");
       });
     }
@@ -1250,12 +1283,12 @@
   }
 
   function curricId(key) { return "curric-" + key; }
+  function generalId(key) { return "general-" + key; }
 
-  function renderCurricFiles(key) {
-    var itemId = curricId(key);
+  function renderFileLibrary(key, domPrefix, itemId) {
     var editable = canEdit(key);
     getLinks(itemId, function(files) {
-      var el = document.getElementById("curric-list-"+key);
+      var el = document.getElementById(domPrefix+"-list-"+key);
       if (!el) return;
       if (!files.length) { el.innerHTML = '<span class="curric-empty">No documents added yet.</span>'; return; }
       el.innerHTML = files.map(function(f) {
@@ -1263,7 +1296,7 @@
         var showDel = editable && (!locked || WHO==="alex");
         return '<span class="curric-btn">' +
           '<a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+esc(f.label||f.url)+'</a>' +
-          (showDel ? '<button class="curric-del" data-lid="'+esc(f.id)+'" data-key="'+esc(key)+'" title="Remove">&#x2715;</button>' :
+          (showDel ? '<button class="curric-del" data-lid="'+esc(f.id)+'" data-key="'+esc(key)+'" data-prefix="'+esc(domPrefix)+'" title="Remove">&#x2715;</button>' :
             (locked ? '<span class="curric-lock" title="Added by coordinator, locked">&#128274;</span>' : '')
           ) +
           '</span>';
@@ -1271,12 +1304,18 @@
       if (editable) {
         el.querySelectorAll(".curric-del").forEach(function(btn) {
           btn.addEventListener("click", function() {
-            deleteLink(btn.dataset.lid, itemId, function() { renderCurricFiles(btn.dataset.key); });
+            deleteLink(btn.dataset.lid, itemId, function() {
+              if (btn.dataset.prefix === "general") { renderGeneralFiles(btn.dataset.key); }
+              else { renderCurricFiles(btn.dataset.key); }
+            });
           });
         });
       }
     });
   }
+
+  function renderCurricFiles(key) { renderFileLibrary(key, "curric", curricId(key)); }
+  function renderGeneralFiles(key) { renderFileLibrary(key, "general", generalId(key)); }
 
   function renderLinks(itemId, editable, panelEl, key) {
     getLinks(itemId, function(links) {
