@@ -279,6 +279,17 @@
   }
   .curric-btn:hover { background: #fff; }
   .curric-btn .curric-lock { color: var(--ink-soft); font-size: 0.85rem; flex-shrink: 0; }
+  .curric-move {
+    display: inline-flex; flex-direction: column; gap: 1px; margin-right: 2px; flex-shrink: 0;
+  }
+  .curric-mv {
+    appearance: none; border: none; background: rgba(22,40,79,0.14);
+    color: var(--navy); border-radius: 3px; width: 16px; height: 13px;
+    font-size: 0.55rem; line-height: 1; cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .curric-mv:hover:not(:disabled) { background: rgba(22,40,79,0.28); }
+  .curric-mv:disabled { opacity: 0.25; cursor: default; }
   .curric-btn .curric-del {
     appearance: none; border: none; background: rgba(22,40,79,0.14);
     color: var(--navy); border-radius: 50%; width: 18px; height: 18px;
@@ -918,18 +929,38 @@
     sbGet("links", { item_id: itemId }).then(function(rows) { cb(rows || []); });
   }
 
+  // Order is encoded at the front of the label as "NNN|Actual title", so no
+  // schema change is needed on the links table. decodeOrderedLabel splits
+  // it back out; entries saved before this feature simply have order:null
+  // and get migrated to a sequential position the first time they're viewed.
+  function encodeOrderedLabel(order, text) {
+    var n = String(order); while (n.length < 3) n = "0" + n;
+    return n + "|" + text;
+  }
+  function decodeOrderedLabel(raw) {
+    var m = /^(\d{3})\|([\s\S]*)$/.exec(raw || "");
+    if (m) return { order: parseInt(m[1], 10), text: m[2] };
+    return { order: null, text: raw || "" };
+  }
+
   function addLink(itemId, label, url, cb, locked) {
     var idPrefix = locked ? "lock-" : "open-";
-    if (!USE_SUPABASE) {
-      getLinks(itemId, function(links) {
-        var id = idPrefix + "l" + Date.now();
-        links.push({ id: id, item_id: itemId, label: label, url: url });
-        local.set("links:" + itemId, JSON.stringify(links));
-        cb && cb();
+    getLinks(itemId, function(existing) {
+      var maxOrder = -1;
+      existing.forEach(function(f) {
+        var d = decodeOrderedLabel(f.label);
+        if (d.order !== null && d.order > maxOrder) maxOrder = d.order;
       });
-      return;
-    }
-    sbUpsert("links", { id: idPrefix + "l" + Date.now(), item_id: itemId, label: label, url: url }).then(function(){ cb && cb(); });
+      var encodedLabel = encodeOrderedLabel(maxOrder + 1, label);
+      if (!USE_SUPABASE) {
+        var id = idPrefix + "l" + Date.now();
+        existing.push({ id: id, item_id: itemId, label: encodedLabel, url: url });
+        local.set("links:" + itemId, JSON.stringify(existing));
+        cb && cb();
+        return;
+      }
+      sbUpsert("links", { id: idPrefix + "l" + Date.now(), item_id: itemId, label: encodedLabel, url: url }).then(function(){ cb && cb(); });
+    });
   }
 
   function deleteLink(linkId, itemId, cb) {
@@ -1286,33 +1317,81 @@
   function curricId(key) { return "curric-" + key; }
   function generalId(key) { return "general-" + key; }
 
+  function refreshLibrary(key, domPrefix) {
+    if (domPrefix === "general") { renderGeneralFiles(key); } else { renderCurricFiles(key); }
+  }
+
   function renderFileLibrary(key, domPrefix, itemId) {
     var editable = canEdit(key);
     getLinks(itemId, function(files) {
       var el = document.getElementById(domPrefix+"-list-"+key);
       if (!el) return;
       if (!files.length) { el.innerHTML = '<span class="curric-empty">No documents added yet.</span>'; return; }
-      el.innerHTML = files.map(function(f) {
+
+      var decoded = files.map(function(f, i) {
+        var d = decodeOrderedLabel(f.label);
+        return { raw: f, order: d.order, text: d.text, fallbackIdx: i };
+      });
+
+      // Migrate any pre-reorder entries (no encoded order yet) to a stable
+      // sequence, so ordering is safe to save from this point on.
+      var needsMigration = decoded.some(function(d){ return d.order === null; });
+      if (needsMigration) {
+        decoded.sort(function(a,b){
+          if (a.order !== null && b.order !== null) return a.order - b.order;
+          if (a.order !== null) return -1;
+          if (b.order !== null) return 1;
+          return a.fallbackIdx - b.fallbackIdx;
+        });
+        decoded.forEach(function(d, i) {
+          d.order = i;
+          sbUpsert("links", { id: d.raw.id, item_id: itemId, label: encodeOrderedLabel(i, d.text), url: d.raw.url });
+        });
+      }
+
+      decoded.sort(function(a,b){ return a.order - b.order; });
+
+      el.innerHTML = decoded.map(function(d, i) {
+        var f = d.raw;
         var locked = String(f.id||"").indexOf("lock-") === 0;
         var showDel = editable && (!locked || WHO==="alex");
+        var isFirst = i===0, isLast = i===decoded.length-1;
         return '<span class="curric-btn">' +
-          '<a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+esc(f.label||f.url)+'</a>' +
-          (showDel ? '<button class="curric-del" data-lid="'+esc(f.id)+'" data-key="'+esc(key)+'" data-prefix="'+esc(domPrefix)+'" title="Remove">&#x2715;</button>' :
+          (editable ? '<span class="curric-move">' +
+            '<button class="curric-mv" data-lid="'+esc(f.id)+'" data-dir="-1"'+(isFirst?' disabled':'')+' title="Move up">&#9650;</button>' +
+            '<button class="curric-mv" data-lid="'+esc(f.id)+'" data-dir="1"'+(isLast?' disabled':'')+' title="Move down">&#9660;</button>' +
+          '</span>' : '') +
+          '<a href="'+esc(f.url)+'" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">'+esc(d.text||f.url)+'</a>' +
+          (showDel ? '<button class="curric-del" data-lid="'+esc(f.id)+'" title="Remove">&#x2715;</button>' :
             (locked ? '<span class="curric-lock" title="Added by coordinator, locked">&#128274;</span>' : '')
           ) +
           '</span>';
       }).join("");
+
       if (editable) {
         el.querySelectorAll(".curric-del").forEach(function(btn) {
           btn.addEventListener("click", function() {
-            deleteLink(btn.dataset.lid, itemId, function() {
-              if (btn.dataset.prefix === "general") { renderGeneralFiles(btn.dataset.key); }
-              else { renderCurricFiles(btn.dataset.key); }
-            });
+            deleteLink(btn.dataset.lid, itemId, function() { refreshLibrary(key, domPrefix); });
+          });
+        });
+        el.querySelectorAll(".curric-mv").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            if (btn.disabled) return;
+            moveFile(key, domPrefix, itemId, decoded, btn.dataset.lid, parseInt(btn.dataset.dir, 10));
           });
         });
       }
     });
+  }
+
+  function moveFile(key, domPrefix, itemId, decodedList, id, dir) {
+    var idx = decodedList.findIndex(function(d){ return d.raw.id === id; });
+    var swapIdx = idx + dir;
+    if (idx < 0 || swapIdx < 0 || swapIdx >= decodedList.length) return;
+    var a = decodedList[idx], b = decodedList[swapIdx];
+    sbUpsert("links", { id: a.raw.id, item_id: itemId, label: encodeOrderedLabel(b.order, a.text), url: a.raw.url });
+    sbUpsert("links", { id: b.raw.id, item_id: itemId, label: encodeOrderedLabel(a.order, b.text), url: b.raw.url });
+    setTimeout(function(){ refreshLibrary(key, domPrefix); }, 300);
   }
 
   function renderCurricFiles(key) { renderFileLibrary(key, "curric", curricId(key)); }
