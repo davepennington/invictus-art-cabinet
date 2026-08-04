@@ -552,7 +552,7 @@
       </button>
       <button class="who-btn" data-who="fanny">
         <span class="wb-av">F</span>
-        <span><span>Fanny</span><span class="wb-role">Year 8 Art</span></span>
+        <span><span>Fanny</span><span class="wb-role">Year 7 Art</span></span>
       </button>
       <button class="who-btn" data-who="alex">
         <span class="wb-av">A</span>
@@ -595,7 +595,7 @@
   <div class="tabs" role="tablist" aria-label="Department members">
     <button class="tab" role="tab" id="tab-scarlett" aria-controls="panel-scarlett" aria-selected="true">Scarlett<span class="tab-sub">Primary</span></button>
     <button class="tab" role="tab" id="tab-emma" aria-controls="panel-emma" aria-selected="false" tabindex="-1">Emma<span class="tab-sub">Lower Secondary</span></button>
-    <button class="tab" role="tab" id="tab-fanny" aria-controls="panel-fanny" aria-selected="false" tabindex="-1">Fanny<span class="tab-sub">Year 8</span></button>
+    <button class="tab" role="tab" id="tab-fanny" aria-controls="panel-fanny" aria-selected="false" tabindex="-1">Fanny<span class="tab-sub">Year 7</span></button>
     <button class="tab" role="tab" id="tab-alex" aria-controls="panel-alex" aria-selected="false" tabindex="-1">Alex<span class="tab-sub">Upper Secondary</span></button>
   </div>
 
@@ -715,7 +715,8 @@
     { id:"rep-t2b", term:2, type:"report", title:"First Semester Report grades",   when:"End of November · pencilled",        date:"2026-11-23", pencil:true, detail:"First Semester Report grades due end of November. Pencilled, confirm with school." },
     { id:"rep-t3",  term:3, type:"report", title:"Term 3 Assessments",       when:"Last day of Term 3 · 18 Mar · to be confirmed",      date:"2027-03-18", detail:"Term 3 assessments keyed in and sent via Google Classroom by the last day of term. Date to be confirmed." },
     { id:"rep-t4a", term:4, type:"report", title:"End of Year Report comments",   when:"Beginning of May · pencilled",      date:"2027-05-03", pencil:true, detail:"End of Year Report comments due at the beginning of May. Pencilled, confirm with school." },
-    { id:"rep-t4b", term:4, type:"report", title:"End of Year Report grades",     when:"Beginning of June · pencilled",     date:"2027-06-02", pencil:true, detail:"End of Year Report grades due at the beginning of June. Pencilled, confirm with school." }
+    { id:"rep-t4b", term:4, type:"report", title:"End of Year Report grades",     when:"Beginning of June · pencilled",     date:"2027-06-02", pencil:true, detail:"End of Year Report grades due at the beginning of June. Pencilled, confirm with school." },
+    { id:"anniv-t2", term:2, type:"deliv", title:"7th Anniversary: Humans of Invictus PP, to be confirmed", when:"Friday 11 December · to be confirmed", date:"2026-12-11", pencil:true, detail:"Whole-department deliverable for the 7th Anniversary Global Village celebration. Working concept: Humans of Invictus PP, a Humans of New York style project pairing student portraits with a short interview quote. Format, medium, and student groupings still to be confirmed." }
   ];
 
   var TEACHERS = {
@@ -746,7 +747,7 @@
       summary:"Leads Lower Secondary art and the department's Lower Secondary field trip.",
       items:[
         { id:"emma-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Term 1",             detail:"Formal lesson observation by Alex, with shared written reflection. Completed within Term 1." },
-        { id:"emma-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 7 to 9", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Leads printmaking CPD","Mid-term check-in"] },
+        { id:"emma-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 8 to 9", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Leads printmaking CPD","Mid-term check-in"] },
         { id:"emma-t2",   term:2, type:"deliv", title:"Lead Lower Secondary trip", when:"Late October",        detail:"Lead the Lower Secondary field trip in late October. Alex provides structural support.", chips:["Mid-term check-in"] },
         { id:"emma-t3",   term:3, type:"deliv", title:"Digital record pilot",     when:"Across the term",     detail:"Pilot a digital record for the Lower Secondary strand, informed by the IGCSE thread system.", chips:["Mid-term check-in"] },
 
@@ -779,10 +780,10 @@
       ]
     },
     fanny: {
-      name:"Fanny", role:"Lower Secondary Art · Year 8",
-      summary:"Teaches Year 8 art across both classes.",
+      name:"Fanny", role:"Lower Secondary Art · Year 7",
+      summary:"Teaches Year 7 art across both classes.",
       items:[
-        { id:"fanny-t1",   term:1, type:"deliv", title:"Scheme of Work, Year 8", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Mid-term check-in"] },
+        { id:"fanny-t1",   term:1, type:"deliv", title:"Scheme of Work, Year 7", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Mid-term check-in"] },
 
 
 
@@ -1033,7 +1034,7 @@
       (!canEdit(key) ? '<span class="readonly-badge">Read only for you</span>' : '') +
       '</div>';
 
-    var curricLabel = key==="scarlett" ? "Primary" : (key==="emma" ? "Lower Secondary" : (key==="fanny" ? "Year 8" : "Upper Secondary"));
+    var curricLabel = key==="scarlett" ? "Primary" : (key==="emma" ? "Lower Secondary" : (key==="fanny" ? "Year 7" : "Upper Secondary"));
     var curricBlock = '<div class="curric-wrap">' +
       '<div class="curric-head">Curriculum Files</div>' +
       '<div class="curric-sub">'+esc(curricLabel)+' stage documents</div>' +
