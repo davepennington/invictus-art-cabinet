@@ -158,33 +158,31 @@
   .switch-btn:hover { color: var(--gold); }
   .spark { width: 0.5em; height: 0.5em; fill: var(--gold); vertical-align: 0.12em; }
 
-  /* ---- COMING UP ---- */
-  .cu-wrap {
-    margin-top: 80px; padding: 60px 56px 64px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,200,67,0.26);
-    border-radius: var(--r);
+  /* ---- PERSONAL COMING UP (per tab, first thing in the panel) ---- */
+  .pcu-wrap {
+    background: var(--navy); border: 1px solid var(--navy-ink);
+    border-radius: var(--r); padding: 44px 40px 48px; margin-bottom: 44px;
   }
-  .cu-head {
+  .pcu-head {
     font-size: 1.24rem; font-weight: 800;
     letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 14px;
+    color: var(--gold); margin-bottom: 4px;
   }
-  .cu-grid { display: flex; flex-direction: column; gap: 16px; }
-  .cu-cards-row { display: flex; flex-direction: row; gap: 14px; }
-  .cu-cards-row .cu-card { flex: 1; min-width: 0; }
-  .cu-card {
+  .pcu-sub { font-size: 1.05rem; color: rgba(255,255,255,0.6); margin-bottom: 18px; }
+  .pcu-today-text { font-size: 1.05rem; color: rgba(255,255,255,0.55); margin-bottom: 14px; }
+  .pcu-grid { display: flex; flex-direction: column; gap: 16px; }
+  .pcu-cards-row { display: flex; flex-direction: row; gap: 14px; flex-wrap: wrap; }
+  .pcu-card {
     flex: 1 1 180px; min-width: 0; background: var(--cream);
     border-left: 5px solid var(--gold);
     border-radius: var(--r); padding: 20px 22px;
   }
-  .cu-card.pencil { border-left: 5px dashed var(--gold); }
-  .cu-card.holiday { border-left-color: var(--gold); }
-  .cu-card.term-event { border-left-color: var(--gold); }
-  .cu-num { font-size: 2.56rem; font-weight: 900; line-height: 1; color: var(--navy); }
-  .cu-unit { font-size: 0.71rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-top: 1px; }
-  .cu-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-top: 8px; }
-  .cu-when { font-size: 1.2rem; color: var(--ink-soft); margin-top: 2px; }
+  .pcu-card.pencil { border-left: 5px dashed var(--gold); }
+  .pcu-num { font-size: 2.56rem; font-weight: 900; line-height: 1; color: var(--navy); }
+  .pcu-unit { font-size: 0.71rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-top: 1px; }
+  .pcu-title { font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-top: 8px; }
+  .pcu-when { font-size: 1.2rem; color: var(--ink-soft); margin-top: 2px; }
+  .pcu-empty { font-size: 1.05rem; color: rgba(255,255,255,0.55); font-style: italic; }
 
   /* ---- PURCHASE REQUESTS ---- */
   .pr-wrap {
@@ -481,7 +479,7 @@
     .footer-head { color: var(--navy); }
     .cal-item { background: var(--cream); color: var(--ink); }
     .cal-item strong { color: var(--ink); }
-    .cu-wrap { display: none; }
+    .pcu-wrap { display: none; }
   }
 
   .cu-today-card { border-left: 5px solid var(--gold) !important; background: var(--navy) !important; overflow: hidden; padding: 0 !important; flex: 1 1 100% !important; max-height: 160px; }
@@ -599,11 +597,6 @@
       <button class="switch-btn" id="switchBtn">Not you? Switch</button>
     </div>
   </header>
-
-  <section class="cu-wrap" aria-label="Coming up">
-    <div class="cu-head">Coming up</div>
-    <div class="cu-grid" id="cuGrid"></div>
-  </section>
 
   <div class="tabs" role="tablist" aria-label="Department members">
     <button class="tab" role="tab" id="tab-scarlett" aria-controls="panel-scarlett" aria-selected="true">Scarlett<span class="tab-sub">Primary</span></button>
@@ -738,12 +731,13 @@
       summary:"Runs the two IGCSE cohorts directly and coordinates the department.",
       items:[
         { id:"alex-obs-e",  term:1, type:"obs",   title:"Observe Emma",           when:"Term 1",               detail:"Formal lesson observation of Emma with written reflection shared.", chips:["Reflection completed","Feedback given"] },
-        { id:"alex-obs-s",  term:1, type:"obs",   title:"Observe Scarlett",       when:"Term 1",               detail:"Formal lesson observation of Scarlett with written reflection shared.", chips:["Reflection completed","Feedback given"] },
+        { id:"alex-obs-s",  term:1, type:"obs",   title:"Observe Scarlett",       when:"Friday 14 August, 1:30pm to 2:15pm", date:"2026-08-14", detail:"Formal lesson observation of Scarlett with written reflection shared. Confirmed for Friday 14 August, 1:30pm to 2:15pm.", chips:["Reflection completed","Feedback given"] },
+        { id:"alex-sow",    term:1, type:"deliv", title:"Scheme of Work, Years 10 to 11 (IGCSE)", when:"Skeleton due 20 August, full document by mid-term", date:"2026-08-20", detail:"Skeleton mapped by 20 August: units, sequence, assessment points, aligned to Components 1 and 2. Full usable document by mid-term.", chips:["Mid-term check-in"] },
         { id:"alex-t1",     term:1, type:"deliv", title:"Open Component 1",       when:"From day one",         detail:"Open Component 1 across the four boards for Year 11. Settle the new Year 10 cohort into the department system before half-term.", chips:["RUPP Library visit","Studio or gallery visit","Coordinates both Schemes of Work"] },
-        { id:"alex-c1",     term:2, type:"exam",  title:"Component 1 handover",   when:"Early December 2026",  detail:"Component 1 portfolio handover for Year 11. The first of the two dates the whole year turns on." },
+        { id:"alex-c1",     term:2, type:"exam",  title:"Component 1 handover",   when:"Early December 2026",  date:"2026-12-05", detail:"Component 1 portfolio handover for Year 11. The first of the two dates the whole year turns on." },
         { id:"alex-t2",     term:2, type:"deliv", title:"Complete Component 1",   when:"Through to handover",  detail:"Complete all eight sides and hand over in early December. Clean term, no second component competing." },
         { id:"alex-t3",     term:3, type:"deliv", title:"Component 2 build",      when:"Full term from 11 Jan", detail:"Component 2 ESA runs the entire term.", chips:["Feast and Form drawing visit, Year 11, early term"] },
-        { id:"alex-c2",     term:4, type:"exam",  title:"Component 2 finishes",   when:"Early April 2027",     detail:"Component 2 finishes in the first week of Term 4. After this the cohort's assessed making is done." },
+        { id:"alex-c2",     term:4, type:"exam",  title:"Component 2 finishes",   when:"Early April 2027",     date:"2027-04-06", detail:"Component 2 finishes in the first week of Term 4. After this the cohort's assessed making is done." },
 
 
 
@@ -760,7 +754,7 @@
       summary:"Leads Lower Secondary art and the department's Lower Secondary field trip.",
       items:[
         { id:"emma-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Term 1",             detail:"Formal lesson observation by Alex, with shared written reflection. Completed within Term 1." },
-        { id:"emma-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 8 to 9", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Leads printmaking CPD","Mid-term check-in"] },
+        { id:"emma-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 8 to 9", when:"Skeleton due 20 August, full document by mid-term", date:"2026-08-20", detail:"Skeleton mapped by 20 August: units, sequence, assessment points. Full usable document by mid-term.", chips:["Leads printmaking CPD","Mid-term check-in"] },
         { id:"emma-t2",   term:2, type:"deliv", title:"Lead Lower Secondary trip", when:"Late October",        detail:"Lead the Lower Secondary field trip in late October. Alex provides structural support.", chips:["Mid-term check-in"] },
         { id:"emma-t3",   term:3, type:"deliv", title:"Digital record pilot",     when:"Across the term",     detail:"Pilot a digital record for the Lower Secondary strand, informed by the IGCSE thread system.", chips:["Mid-term check-in"] },
 
@@ -778,13 +772,13 @@
       name:"Scarlett", role:"Primary Art · Stages 1 to 6",
       summary:"Leads Primary art and the department's Primary field trip.",
       items:[
-        { id:"scar-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Term 1",             detail:"Formal lesson observation by Alex, with shared written reflection. Completed within Term 1." },
-        { id:"scar-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 1 to 6", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week, then the full usable document by mid-term.", chips:["Mid-term check-in"] },
+        { id:"scar-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Friday 14 August, 1:30pm to 2:15pm", date:"2026-08-14", detail:"Formal lesson observation by Alex, with shared written reflection. Confirmed for Friday 14 August, 1:30pm to 2:15pm." },
+        { id:"scar-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 1 to 6", when:"Skeleton due 20 August, full document by mid-term", date:"2026-08-20", detail:"Skeleton mapped by 20 August, then the full usable document by mid-term.", chips:["Mid-term check-in"] },
         { id:"scar-t3",   term:3, type:"deliv", title:"Lead Primary trip",        when:"Late January",        detail:"Lead the Primary field trip in late January. Alex provides structural support.", chips:["Mid-term check-in"] },
 
 
 
-        { id:"scar-t4",   term:4, type:"deliv", title:"Khmer New Year and Commencement", when:"Term 4",      detail:"Khmer New Year installation around 14 to 16 April, then Commencement contribution." },
+        { id:"scar-t4",   term:4, type:"deliv", title:"Khmer New Year and Commencement", when:"Term 4",      date:"2027-04-14", detail:"Khmer New Year installation around 14 to 16 April, then Commencement contribution." },
         { id:"scar-ra1", term:1, type:"report", title:"Report and Analysis document", when:"Last day of Term 1 · 8 Oct", date:"2026-10-09", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"scar-ra2", term:2, type:"report", title:"Report and Analysis document", when:"Last day of Term 2 · 18 Dec", date:"2026-12-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
         { id:"scar-ra3", term:3, type:"report", title:"Report and Analysis document", when:"Last day of Term 3 · 18 Mar", date:"2027-03-19", detail:"Complete the Report and Analysis document. Paste the Drive link in attachments below.", chips:["Google Drive document"] },
@@ -796,7 +790,7 @@
       name:"Fanny", role:"Lower Secondary Art · Year 7",
       summary:"Teaches Year 7 art across both classes.",
       items:[
-        { id:"fanny-t1",   term:1, type:"deliv", title:"Scheme of Work, Year 7", when:"Skeleton week 2, full by mid-term", detail:"Skeleton mapped by the second week: units, sequence, assessment points. Full usable document by mid-term.", chips:["Mid-term check-in"] },
+        { id:"fanny-t1",   term:1, type:"deliv", title:"Scheme of Work, Year 7", when:"Skeleton due 20 August, full document by mid-term", date:"2026-08-20", detail:"Skeleton mapped by 20 August: units, sequence, assessment points. Full usable document by mid-term.", chips:["Mid-term check-in"] },
 
 
 
@@ -1027,27 +1021,28 @@
   function canEdit(panelKey) { return AUTHED && (WHO==="alex" || WHO===panelKey); }
 
   /* ---- COMING UP ---- */
-  function renderComingUp() {
-    var upcoming = CU_POOL.filter(function(x){ return daysFrom(x.date)>=0; })
+  function buildPersonalComingUp(key) {
+    var t = TEACHERS[key];
+    var upcoming = t.items.filter(function(x){ return x.date && daysFrom(x.date)>=0; })
       .sort(function(a,b){ return dInt(a.date)-dInt(b.date); }).slice(0,4);
-    var el = document.getElementById("cuGrid");
-    if (!upcoming.length) { el.innerHTML='<p class="cu-today-text">Nothing scheduled ahead.</p>'; return; }
-
     var todayStr = TODAY.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-    var todayLine = '<div class="cu-today-text">Today is ' + todayStr + '</div>';
-
+    var head = '<div class="pcu-head">Coming Up</div>' +
+      '<div class="pcu-sub">Just for '+esc(t.name)+', not the whole department</div>' +
+      '<div class="pcu-today-text">Today is ' + todayStr + '</div>';
+    if (!upcoming.length) {
+      return '<div class="pcu-wrap">' + head + '<div class="pcu-empty">Nothing dated coming up right now.</div></div>';
+    }
     var cards = upcoming.map(function(x){
       var d = daysFrom(x.date);
-      var cls = "cu-card" + (x.pencil?" pencil":"") + (x.type==="holiday"?" holiday":"") + (x.type==="term-event"?" term-event":"");
+      var cls = "pcu-card" + (x.pencil?" pencil":"");
       var dateStr = new Date(x.date+"T00:00:00").toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
       return '<div class="'+cls+'">' +
-        '<div class="cu-num">'+(d===0?"Today":d)+'<span class="cu-unit">'+(d===0?"":d===1?"day away":"days away")+'</span></div>' +
-        '<div class="cu-title">'+esc(x.title)+'</div>' +
-        '<div class="cu-date">'+dateStr+(x.pencil?' &middot; pencilled':'')+'</div>' +
+        '<div class="pcu-num">'+(d===0?"Today":d)+'<span class="pcu-unit">'+(d===0?"":d===1?"day away":"days away")+'</span></div>' +
+        '<div class="pcu-title">'+esc(x.title)+'</div>' +
+        '<div class="pcu-when">'+dateStr+(x.pencil?' &middot; pencilled':'')+'</div>' +
         '</div>';
     }).join("");
-
-    el.innerHTML = todayLine + '<div class="cu-cards-row">' + cards + '</div>';
+    return '<div class="pcu-wrap">' + head + '<div class="pcu-cards-row">' + cards + '</div></div>';
   }
 
 
@@ -1066,6 +1061,8 @@
       '<div class="p-summary">'+esc(t.summary)+'</div>' +
       (!canEdit(key) ? '<span class="readonly-badge">Read only for you</span>' : '') +
       '</div>';
+
+    var pcuBlock = buildPersonalComingUp(key);
 
     var curricLabel = key==="scarlett" ? "Primary" : (key==="emma" ? "Lower Secondary" : (key==="fanny" ? "Year 7" : "Upper Secondary"));
     var curricBlock = '<div class="curric-wrap">' +
@@ -1135,7 +1132,7 @@
       '<button class="btn-sm" id="msg-send-'+key+'">Send</button>' +
       '</div></div>';
 
-    panelEl.innerHTML = head + curricBlock + generalBlock + legend + '<div class="tl">'+cols+'</div>' + detail + notesBlock + feedback;
+    panelEl.innerHTML = head + pcuBlock + curricBlock + generalBlock + legend + '<div class="tl">'+cols+'</div>' + detail + notesBlock + feedback;
   }
 
   /* ---- WIRE PANEL ---- */
@@ -1452,7 +1449,6 @@
     document.getElementById("whoScreen").style.display = "none";
     document.getElementById("app").style.display = "";
     document.getElementById("mastName").textContent = TEACHERS[who].name + (AUTHED ? "" : " (view only)");
-    renderComingUp();
     panels.forEach(function(p){ buildPanel(p); wirePanel(p); });
     if (!USE_SUPABASE) {
       status("Running in local mode. Add Supabase keys to enable shared sync across devices.");
