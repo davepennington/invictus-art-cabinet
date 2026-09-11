@@ -756,6 +756,7 @@
         { id:"emma-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Term 1",             detail:"Formal lesson observation by Alex, with shared written reflection. Completed within Term 1." },
         { id:"emma-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 8 to 9", when:"Skeleton due 20 August, full document by mid-term", date:"2026-08-20", detail:"Skeleton mapped by 20 August: units, sequence, assessment points. Full usable document by mid-term.", chips:["Leads printmaking CPD","Mid-term check-in"] },
         { id:"emma-t2",   term:2, type:"deliv", title:"Lead Lower Secondary trip", when:"Late October",        detail:"Lead the Lower Secondary field trip in late October. Alex provides structural support.", chips:["Mid-term check-in"] },
+        { id:"emma-triplock", term:2, type:"deliv", title:"Field trip venue and date lock-in", when:"By mid Term 2 · 18 Nov", date:"2026-11-18", detail:"Add the venue and a pencilled date (January or February) for the Lower Secondary field trip. Include the year group(s) taking part and 2 attached Learning Objectives.", chips:["Field trip lock-in"] },
         { id:"emma-t3",   term:3, type:"deliv", title:"Digital record pilot",     when:"Across the term",     detail:"Pilot a digital record for the Lower Secondary strand, informed by the IGCSE thread system.", chips:["Mid-term check-in"] },
 
 
@@ -775,6 +776,7 @@
         { id:"scar-obs",  term:1, type:"obs",   title:"Observation and reflection", when:"Friday 14 August, 1:30pm to 2:15pm", date:"2026-08-14", detail:"Formal lesson observation by Alex, with shared written reflection. Confirmed for Friday 14 August, 1:30pm to 2:15pm." },
         { id:"scar-t1",   term:1, type:"deliv", title:"Scheme of Work, Years 1 to 6", when:"Skeleton due 20 August, full document by mid-term", date:"2026-08-20", detail:"Skeleton mapped by 20 August, then the full usable document by mid-term.", chips:["Mid-term check-in"] },
         { id:"scar-t3",   term:3, type:"deliv", title:"Lead Primary trip",        when:"Late January",        detail:"Lead the Primary field trip in late January. Alex provides structural support.", chips:["Mid-term check-in"] },
+        { id:"scar-triplock", term:2, type:"deliv", title:"Field trip venue and date lock-in", when:"By mid Term 2 · 18 Nov", date:"2026-11-18", detail:"Add the venue and a pencilled date (January or February) for the Primary field trip. Include the year group(s) taking part and 2 attached Learning Objectives.", chips:["Field trip lock-in"] },
 
 
 
@@ -1514,6 +1516,25 @@
   if (remembered && TEACHERS[remembered]) {
     boot(remembered, local.get("authed:" + remembered) === "1");
   }
+
+  // One-time seed: attach the Field Trips Log link to Scarlett's and Emma's
+  // field trip lock-in nodes, so it's there for them without either having
+  // to paste it in themselves. Idempotent - checks for the URL first, so
+  // running this on every page load never creates duplicates.
+  (function seedFieldTripLink() {
+    var FIELD_TRIP_URL = "https://docs.google.com/spreadsheets/d/1Bqfo9GVGl4saKrUw6eDCVafKAqLkUpEC/edit?gid=590592871#gid=590592871";
+    var targets = [
+      { itemId: "emma-triplock", label: "Field Trips Log" },
+      { itemId: "scar-triplock", label: "Field Trips Log" }
+    ];
+    targets.forEach(function(t) {
+      getLinks(t.itemId, function(existing) {
+        var already = (existing || []).some(function(l) { return l.url === FIELD_TRIP_URL; });
+        if (already) return;
+        addLink(t.itemId, t.label, FIELD_TRIP_URL, null, true);
+      });
+    });
+  })();
 
 })();
 </script>
